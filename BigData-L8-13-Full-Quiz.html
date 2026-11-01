@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big Data L8–13 Full Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf8f5; --page:#ffffff; --ink:#232323; --ink-soft:#54514c; --rule:#e4ddd2;
+    --accent:#8a4b2f; --accent-2:#2f6b5e; --accent-3:#3a5a8c; --card:#f4efe6;
+    --dark:#20211f; --dark-2:#2c2e2a; --code-bg:#1e1f1c; --code-ink:#e8e3d8;
+    --warn-bg:#fbeee0; --warn-line:#c07a3a; --note-bg:#eaf1ee; --note-line:#2f6b5e;
+    --term-bg:#eef1f7; --term-line:#3a5a8c;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans', sans-serif;line-height:1.65;font-size:16px;}
+  h1,h2,h3,h4{font-family:'Lora', serif;color:var(--ink);line-height:1.25;margin:0 0 .5em 0;}
+  .hero{background:linear-gradient(160deg,var(--dark) 0%, var(--dark-2) 60%, #33362f 100%);color:#f4efe6;padding:52px 24px 40px;}
+  .hero-inner{max-width:920px;margin:0 auto;}
+  .hero .kicker{font-family:'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;font-size:12.5px;color:#c9b79b;margin-bottom:14px;}
+  .hero h1{color:#fff;font-size:clamp(1.7rem,4vw,2.5rem);font-weight:600;margin-bottom:10px;}
+  .hero p{color:#d8d2c4;max-width:640px;font-size:1.02rem;margin:0 0 18px 0;}
+  .hero .sources{display:flex;flex-wrap:wrap;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;}
+  .hero .sources span{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);padding:5px 10px;border-radius:20px;color:#efe9dc;}
+  p{margin:0 0 14px 0;}
+  strong{color:var(--ink);}
+  pre.code{background:var(--code-bg);color:var(--code-ink);font-family:'IBM Plex Mono',monospace;padding:16px 20px;border-radius:10px;overflow-x:auto;margin:16px 0;font-size:.88rem;line-height:1.5;}
+  code{font-family:'IBM Plex Mono',monospace;background:#eee7d9;padding:1px 5px;border-radius:4px;font-size:.88em;}
+  footer{text-align:center;color:var(--ink-soft);font-size:.85rem;padding:30px 20px 50px;font-family:'IBM Plex Mono',monospace;}
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px 80px;}
+  .panel{background:var(--page);border:1px solid var(--rule);border-radius:14px;padding:20px 22px;box-shadow:0 10px 30px rgba(0,0,0,.05);}
+  .setup{margin-top:-26px;position:relative;z-index:2;}
+  .setup h2,.results h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;font-family:'IBM Plex Mono',monospace;color:var(--ink-soft);margin-bottom:10px;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+  .chip{font:500 13px 'IBM Plex Sans',sans-serif;padding:6px 12px;border-radius:20px;border:1px solid var(--rule);background:#fff;color:var(--ink);cursor:pointer;}
+  .chip.on{background:var(--dark);color:#fff;border-color:var(--dark);}
+  .chip small{opacity:.65;margin-left:4px;font-family:'IBM Plex Mono',monospace;}
+  .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;}
+  .btn{font:600 14px 'IBM Plex Sans',sans-serif;padding:9px 18px;border-radius:8px;border:1px solid var(--dark);background:var(--dark);color:#fff;cursor:pointer;}
+  .btn.ghost{background:#fff;color:var(--ink);border-color:var(--rule);}
+  .btn:disabled{opacity:.4;cursor:default;}
+  .opt-line{display:flex;gap:16px;flex-wrap:wrap;font-size:.9rem;color:var(--ink-soft);}
+  .opt-line label{display:flex;gap:6px;align-items:center;cursor:pointer;}
+  .progress{height:8px;background:#ece6db;border-radius:6px;overflow:hidden;margin:22px 0 8px;display:flex;}
+  .progress i{display:block;height:100%;}
+  .progress .ok{background:#2f8a5e;} .progress .bad{background:#c0503a;}
+  .stats{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--ink-soft);margin-bottom:14px;flex-wrap:wrap;gap:6px;}
+  .card{margin-top:6px;}
+  .qmeta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
+  .ttag{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#fff;padding:3px 10px;border-radius:14px;}
+  .qnum{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);}
+  .qtype{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--accent);margin-bottom:6px;}
+  .qtext{font-family:'Lora',serif;font-size:1.22rem;font-weight:600;line-height:1.4;margin-bottom:14px;}
+  .opts{display:flex;flex-direction:column;gap:8px;}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;font:inherit;font-size:.97rem;padding:11px 14px;border:1.5px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink);cursor:pointer;}
+  .opt:hover:not(:disabled){border-color:var(--accent-3);background:#f7f9fd;}
+  .opt .k{flex:0 0 24px;height:24px;border-radius:6px;background:var(--card);font:600 12px 'IBM Plex Mono',monospace;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);}
+  .opt.sel{border-color:var(--accent-3);background:#eef2fa;}
+  .opt.sel .k{background:var(--accent-3);color:#fff;}
+  .opt.right{border-color:#2f8a5e;background:#e4f4ea;}
+  .opt.right .k{background:#2f8a5e;color:#fff;}
+  .opt.wrong{border-color:#c0503a;background:#fbe7e2;}
+  .opt.wrong .k{background:#c0503a;color:#fff;}
+  .opt:disabled{cursor:default;}
+  .ord{display:flex;flex-direction:column;gap:6px;}
+  .ord-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1.5px solid var(--rule);border-radius:10px;background:#fff;}
+  .ord-item .n{font:600 12px 'IBM Plex Mono',monospace;color:var(--ink-soft);width:20px;}
+  .ord-item .tx{flex:1;}
+  .ord-item button{font:600 13px 'IBM Plex Mono',monospace;border:1px solid var(--rule);background:var(--card);border-radius:6px;width:30px;height:28px;cursor:pointer;}
+  .ord-item button:disabled{opacity:.3;cursor:default;}
+  .ord-item.right{border-color:#2f8a5e;background:#e4f4ea;} .ord-item.wrong{border-color:#c0503a;background:#fbe7e2;}
+  .match{display:flex;flex-direction:column;gap:8px;}
+  .mrow{display:grid;grid-template-columns:1fr 1.3fr;gap:10px;align-items:center;padding:8px 12px;border:1.5px solid var(--rule);border-radius:10px;background:#fff;}
+  .mrow select{font:inherit;font-size:.92rem;padding:6px 8px;border-radius:6px;border:1px solid var(--rule);background:#fff;width:100%;}
+  .mrow.right{border-color:#2f8a5e;background:#e4f4ea;} .mrow.wrong{border-color:#c0503a;background:#fbe7e2;}
+  .mrow .fix{grid-column:1/-1;font-size:.85rem;color:#8a2f1e;}
+  .actions{display:flex;justify-content:space-between;gap:10px;margin-top:18px;flex-wrap:wrap;}
+  .fb{margin-top:16px;padding:12px 16px;border-radius:8px;font-size:.95rem;display:none;}
+  .fb.show{display:block;}
+  .fb.ok{background:#e4f4ea;border-left:4px solid #2f8a5e;}
+  .fb.no{background:#fbe7e2;border-left:4px solid #c0503a;}
+  .fb .src{display:block;margin-top:6px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-soft);}
+  .pv{margin-top:12px;border:1px dashed #aab3c9;border-radius:8px;padding:10px;background:#f4f6fa;}
+  .pv-l{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7a829a;margin-bottom:6px;}
+  .map{display:flex;flex-wrap:wrap;gap:5px;margin-top:22px;}
+  .map button{width:30px;height:30px;border-radius:7px;border:1px solid var(--rule);background:#fff;font:500 11px 'IBM Plex Mono',monospace;cursor:pointer;color:var(--ink-soft);}
+  .map button.ok{background:#2f8a5e;color:#fff;border-color:#2f8a5e;}
+  .map button.bad{background:#c0503a;color:#fff;border-color:#c0503a;}
+  .map button.cur{outline:2px solid var(--dark);outline-offset:1px;}
+  .results{margin-top:24px;display:none;}
+  .big{font-family:'Lora',serif;font-size:2.6rem;font-weight:700;margin:4px 0;}
+  .tbar{display:grid;grid-template-columns:190px 1fr 60px;gap:10px;align-items:center;margin:8px 0;font-size:.9rem;}
+  .tbar .bar{height:10px;background:#ece6db;border-radius:5px;overflow:hidden;}
+  .tbar .bar i{display:block;height:100%;}
+  .tbar .v{font-family:'IBM Plex Mono',monospace;font-size:12px;text-align:right;}
+  .kbd{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-soft);margin-top:14px;}
+  @media(max-width:600px){.tbar{grid-template-columns:110px 1fr 50px;}.mrow{grid-template-columns:1fr;}.qtext{font-size:1.1rem;}}
+</style>
+</head>
+<body>
+<div class="hero"><div class="hero-inner">
+  <div class="kicker">Big Data · Lectures 8–13</div>
+  <h1>MapReduce, HBase and YARN: full quiz</h1>
+  <p>Every content slide of Lectures 8–13: MapReduce internals and Pig, wide column stores, HBase architecture and storage, LSM-trees and reads, the Hadoop-in-Docker lab, and YARN scheduling. Pick a lecture or take them all.</p>
+  <div class="sources" id="heroMeta"></div>
+</div></div>
+
+<div class="wrap">
+  <div class="panel setup">
+    <h2>Choose topics</h2>
+    <div class="chips" id="chips"></div>
+    <div class="row">
+      <div class="opt-line">
+        <label><input type="checkbox" id="shuffle"> Shuffle questions</label>
+        <label><input type="checkbox" id="shuffleOpts" checked> Shuffle answer options</label>
+      </div>
+      <button class="btn" id="startBtn">Start quiz →</button>
+    </div>
+  </div>
+
+  <div id="quizArea" style="display:none">
+    <div class="progress" id="prog"></div>
+    <div class="stats"><span id="stA"></span><span id="stB"></span></div>
+    <div class="panel card" id="card"></div>
+    <div class="map" id="map"></div>
+    <div class="kbd">Keyboard: 1–6 pick an option · Enter check / next · ← → move between questions</div>
+  </div>
+
+  <div class="panel results" id="results"></div>
+</div>
+<footer>Big Data · Lectures 8–13 · full quiz</footer>
+<script>
+/*__DATA_START__*/
+const META={refLabel:'Lecture',readyMsg:'Excellent. You are ready for the exam on Lectures 8–13.'};
+const TOPICS={
+  M:{n:'L8 · MapReduce internals and Pig',c:'#8a4b2f'},
+  W:{n:'L9 · Wide column stores',c:'#3a5a8c'},
+  H:{n:'L10 · HBase architecture and storage',c:'#2f6b5e'},
+  R:{n:'L11 · Reads, LSM-trees, ecosystem',c:'#7a5a1e'},
+  D:{n:'L12 · Hadoop lab in Docker',c:'#8e3b6e'},
+  Y:{n:'L13 · YARN',c:'#4a4f5c'}
+};
+/* s:[lecture, slide] is turned into a label at the bottom */
+const QS=[
+/* ================= LECTURE 8 ================= */
+{tp:'M',s:[8,2],t:'mc',q:'Inside one map task, how is the map function applied to the key-value pairs of its split?',o:['Once per input pair, one call after the other','Once for the whole split, with all pairs passed together','In parallel, one thread per input pair','Once per distinct key found in the split'],a:0,w:'A map task loops over its input: <b>one map() call per input key-value pair, sequentially</b> (the blue "Sequentially!" arrow). Parallelism comes from running many tasks, not from parallel calls inside one task.'},
+{tp:'M',s:[8,2],t:'mc',q:'A single map() call receives one input pair. How many intermediate pairs may it emit?',o:['Zero, one or many','Exactly one','At least one','Exactly one per reducer'],a:0,w:'In the diagram, key 1 produces three output pairs. A map call can emit <b>any number of pairs, including zero</b> (for example a filter).'},
+{tp:'M',s:[8,3],t:'mc',q:'How often is the reduce function called inside a reduce task?',o:['Once per intermediate key, with all values of that key','Once per intermediate key-value pair','Once per map task whose output it receives','Once per reduce task, with every key at once'],a:0,w:'The reduce task sees its input <b>grouped by key</b>; reduce() is called <b>once per key</b> with the list of all values for that key, and the calls run sequentially.'},
+{tp:'M',s:[8,3],t:'mc',q:'Why can a reduce task process key I, then key II, then key III one after another without missing any values?',o:['Its input is sorted and grouped, so all values of a key arrive together','Each map task sends exactly one value per key','Keys are processed in whatever order they arrive from the network','Values of the same key are spread over all reduce tasks'],a:0,w:'Before reduce runs, the shuffle <b>sorts and groups the intermediate pairs by key</b>, so each group (key I, key II, ...) is complete and contiguous.'},
+{tp:'M',s:[8,4],t:'mc',q:'True or false: the framework schedules a separate "combine task", just like map tasks and reduce tasks.',o:['True','False'],a:1,w:'"Combine task: <b>No such thing!</b>" Combining is not a task of its own; it happens <b>inside the map task</b>.'},
+{tp:'M',s:[8,5],t:'mc',q:'Where does the combine function actually run?',o:['Inside the map task, on its output before the shuffle','In a dedicated combine slot on each node','Only on the master, after all maps finish','Inside the reduce task, after the shuffle only'],a:0,w:'The combine step is applied to the <b>map output inside the map task</b> (slide 5: Map → Combine in the same box), so less data has to be shuffled.'},
+{tp:'M',s:[8,5],t:'mc',q:'What is the main benefit of using a combiner?',o:['Less intermediate data travels over the network in the shuffle','The reduce phase can be skipped entirely','Map tasks can read remote blocks faster','The number of map tasks becomes smaller'],a:0,w:'A combiner <b>pre-aggregates map output locally</b> (e.g. (hello,1),(hello,1) → (hello,2)), which shrinks the shuffle. The reducer is still needed for the final result.'},
+{tp:'M',s:[8,5],t:'mc',q:'For which job can the reducer be reused as the combiner without changing the final result?',o:['Sum of the values for each key','Average of the values for each key','Median of the values for each key','Number of values received per key (reducer counts its inputs)'],a:0,w:'Summing is associative and commutative, so partial sums can be summed again. An <b>average</b> of averages is wrong, a <b>median</b> of medians is wrong, and counting inputs twice would count partial counts instead of values.'},
+{tp:'M',s:[8,6],t:'mc',q:'One map slot is assigned three map tasks. How does it execute them?',o:['One after the other','All three at the same time','Only the first; the others go to reduce slots','Interleaved, switching after every map() call'],a:0,w:'A slot runs <b>one task at a time</b>. Map task 1, 2 and 3 in the picture are executed <b>sequentially</b> in the same slot.'},
+{tp:'M',s:[8,6],t:'mc',q:'The slot slides show a RAM module and a CPU next to the slot. What does a slot represent?',o:['A fixed share of a node\'s memory and CPU that runs one task at a time','A 128 MB block of an HDFS file','One map() function call','A network connection to the JobTracker'],a:0,w:'A slot is a <b>unit of compute resources (memory + CPU) on a node</b>; it can run one task at a time.'},
+{tp:'M',s:[8,7],t:'mc',q:'In the reduce-slot diagram, reduce task 2 handles keys IV, V and VI. Which statement is true?',o:['All values for key V are processed by reduce task 2 only','Values for key V may be split over reduce tasks 1, 2 and 3','Reduce task 2 also receives some values for key II','Key V is processed by whichever task finishes first'],a:0,w:'Intermediate keys are <b>partitioned</b>: each key belongs to <b>exactly one reduce task</b>, otherwise its result would be incomplete.'},
+{tp:'M',s:[8,8],t:'multi',q:'Select <b>all</b> units that actually exist in (classic) MapReduce.',o:['Map task','Reduce task','Combine task','Map slot','Combine slot','Combine phase'],a:[0,1,3],w:'There are map/reduce <b>tasks</b>, map/reduce <b>slots</b> and map/reduce <b>phases</b>. Combine task, combine slot and combine phase: <b>"No such thing!"</b> Combining lives inside the map task.'},
+{tp:'M',s:[8,9],t:'mc',q:'A job has 12 map tasks of similar length and the cluster offers 3 map slots. Roughly how many "rounds" of map tasks run?',o:['4','1','3','12'],a:0,w:'The <b>3 slots work in parallel</b>, but each slot runs its tasks <b>sequentially</b>: 12 / 3 = <b>4 tasks per slot</b>, so about 4 rounds.'},
+{tp:'M',s:[8,10],t:'mc',q:'In the reduce phase: across different reduce slots, tasks run ___; within one slot, tasks run ___.',o:['in parallel; sequentially','sequentially; in parallel','in parallel; in parallel','sequentially; sequentially'],a:0,w:'Reduce slot 1, 2 and 3 work <b>at the same time</b>, while each slot processes its own reduce tasks <b>one after the other</b>.'},
+{tp:'M',s:[8,11],t:'mc',q:'True or false: between the map phase and the reduce phase there is a separate combine phase in which all map output is combined cluster-wide.',o:['True','False'],a:1,w:'"Combine phase: <b>No such thing!</b>" Combining is done locally inside each map task; between the phases only the <b>shuffle</b> happens.'},
+{tp:'M',s:[8,12],t:'order',q:'Order these units from the <b>largest</b> to the <b>smallest</b>.',o:['Node','Slot','Task','Function call'],w:'A <b>node</b> contains several <b>slots</b>; a slot runs <b>tasks</b> one at a time; a task makes many <b>function calls</b> (map() or reduce()).'},
+{tp:'M',s:[8,12],t:'mc',q:'Each task box contains several "Function call" entries. What is one function call?',o:['One invocation of map() on a pair, or of reduce() on a key group','One read of an HDFS block','One retry of a failed task','One message sent to the JobTracker'],a:0,w:'A task = many <b>calls of the user function</b>: map() once per input pair, reduce() once per key.'},
+{tp:'M',s:[8,13],t:'mc',q:'How are slots allocated in MapReduce 1?',o:['Statically: each slot is configured in advance as a map slot or a reduce slot','Dynamically: a slot switches between map and reduce as needed','Per job: slots are created when a job starts','Randomly: the JobTracker picks a slot type for each task'],a:0,w:'The title says it: <b>static allocation of Map/Reduce slots</b>. Slot (M) only runs map tasks, Slot (R) only runs reduce tasks.'},
+{tp:'M',s:[8,13],t:'mc',q:'The left node has two map slots and one reduce slot. While only map tasks are waiting, what does its reduce slot do?',o:['Stays idle, because it cannot run map tasks','Runs map tasks until reduce work appears','Runs the combine function for the map slots','Is merged into the map slots automatically'],a:0,w:'With static allocation a reduce slot <b>cannot run map tasks</b>, so it sits idle. This waste is one of the motivations for YARN (Lecture 13).'},
+{tp:'M',s:[8,14],t:'mc',q:'In MapReduce terminology, a "task" is always…',o:['either a map task or a reduce task','a map, combine or reduce task','a single map() or reduce() call','a complete MapReduce job'],a:0,w:'<b>Task = Map task or Reduce task.</b> There is no combine task, and a task contains many function calls.'},
+{tp:'M',s:[8,15],t:'order',q:'Put the steps of a MapReduce job in order.',o:['Input data is divided into splits','Map tasks process the splits','Intermediate data is shuffled','Reduce tasks process the key groups','Output data is written'],w:'Input → <b>map</b> → <b>shuffle</b> (intermediate data) → <b>reduce</b> → output, as in the full pipeline picture.'},
+{tp:'M',s:[8,15],t:'mc',q:'In the full pipeline picture, the arrows between the map row and the reduce row cross everywhere. What does that mean?',o:['Each map task can send data to every reduce task','Each map task sends data to exactly one reducer','Only map and reduce tasks on the same node communicate','All map output goes first to the master, which forwards it'],a:0,w:'The shuffle is <b>all-to-all</b>: a map task\'s output contains keys for many partitions, so it can go to <b>any reduce task</b>.'},
+{tp:'M',s:[8,16],t:'mc',q:'An input file is divided into 5 splits. How many map tasks are created?',o:['5','1','It depends on the number of reducers','10'],a:0,w:'<b>1 split = 1 map task.</b>'},
+{tp:'M',s:[8,17],t:'mc',q:'In practice, how large is a split usually?',o:['About one HDFS block, so the map task can read its data locally','The whole input file','A single record','Exactly one line of text'],a:0,w:'Splits are normally aligned with <b>HDFS blocks</b>, so each map task can be scheduled on a node that already stores its block.'},
+{tp:'M',s:[8,18],t:'mc',q:'What is the essential difference between a split and a block?',o:['A split is logical (whole records, MapReduce); a block is physical (bytes, HDFS)','They are two names for the same thing','A split is physical (HDFS); a block is logical (MapReduce)','A block always contains whole records, a split may not'],a:0,w:'Slide 18 puts the <b>logical level (split, made of records)</b> against the <b>physical level (block, made of bits)</b>, with a "not equal" sign between them.'},
+{tp:'M',s:[8,18],t:'mc',q:'Where can an HDFS block boundary fall?',o:['Anywhere, even in the middle of a record','Only between two records','Only at the end of a line','Only between two files'],a:0,w:'HDFS cuts files at <b>fixed byte offsets</b> and knows nothing about records, so a <b>record can be cut in two</b> by a block boundary.'},
+{tp:'M',s:[8,19],t:'mc',q:'A record starts near the end of block 3 and continues in block 4. Who processes it?',o:['The map task of the split where it starts; it fetches the rest from block 4','Both map tasks, each processing half of the record','Only the map task of block 4','Nobody; records across blocks are dropped'],a:0,w:'The record belongs to <b>one split</b>, so one map task processes it and reads the missing part from the next block (slide 20: <b>remote read</b>).'},
+{tp:'M',s:[8,20],t:'mc',q:'Why is the read in slide 20 called a <b>remote</b> read?',o:['The rest of the record is in the next block, which may live on another node','The reducer is on a different machine','HDFS always reads data over the network','The JobTracker must approve the read'],a:0,w:'Blocks are spread across datanodes. The tail of the record is in the <b>next block</b>, which may be stored <b>on another machine</b>, so it is read over the network.'},
+{tp:'M',s:[8,21],t:'mc',q:'What does "fine-tuning to adjust splits to blocks" mean?',o:['Split boundaries move to the nearest record boundary, so splits are almost, but not exactly, blocks','HDFS resizes blocks so they contain whole records','HDFS pads every block with empty space','Records that cross blocks are truncated'],a:0,w:'The splits (top row, now coloured like the blocks) are <b>shifted slightly</b> so they contain whole records; only a small piece is read remotely.'},
+{tp:'M',s:[8,22],t:'mc',q:'<code>students.csv</code> contains: <code>1,Ann,85</code> · <code>2,Bob,72</code> · <code>3,Cem,85</code> · <code>4,Dan,90</code>. What does the script print?',code:'students = LOAD \'students.csv\' USING PigStorage(\',\')\n           AS (id:int, name:chararray, score:int);\ntop_students = FILTER students BY score > 80;\nscore_groups = GROUP top_students BY score;\nscore_counts = FOREACH score_groups\n               GENERATE group AS score, COUNT(top_students) AS count;\nDUMP score_counts;',o:['(85,2) and (90,1)','(85,2), (72,1) and (90,1)','(Ann,85), (Cem,85) and (Dan,90)','(3)'],a:0,w:'FILTER removes Bob (72). GROUP BY score gives groups 85 → {Ann, Cem} and 90 → {Dan}. COUNT per group: <b>(85,2), (90,1)</b>.'},
+{tp:'M',s:[8,22],t:'mc',q:'After <code>GROUP top_students BY score</code>, what does each tuple of <code>score_groups</code> contain?',o:['A field named group (the score) and a bag of the matching student tuples','One student tuple with an extra count field','Only the number of students with that score','A map from names to scores'],a:0,w:'GROUP produces <b>(group, bag)</b>: the field <b>group</b> holds the key and a bag named after the relation (top_students) holds all tuples with that key. That is why the script can write COUNT(top_students).'},
+{tp:'M',s:[8,22],t:'match',q:'Match each Pig Latin statement with what it does.',o:[['LOAD … USING PigStorage(\',\')','Reads a comma-separated file with a schema'],['FILTER … BY','Keeps only tuples that satisfy a condition'],['GROUP … BY','Collects tuples with the same key into a bag'],['FOREACH … GENERATE','Computes new fields for every tuple'],['DUMP','Prints a relation to the screen']],w:'This is the dataflow of the slide: <b>LOAD → FILTER → GROUP → FOREACH/GENERATE → DUMP</b>.'},
+{tp:'M',s:[8,23],t:'match',q:'Match each Pig literal with its type.',o:[['(19,2)','tuple'],['{(19,2), (18,1)}','bag'],['[open#apache]','map'],['10L','long'],['10.5F','float']],w:'A <b>tuple</b> is an ordered set of fields in ( ); a <b>bag</b> is a collection of tuples in { }; a <b>map</b> holds key#value pairs in [ ]; suffix <b>L</b> = long, <b>F</b> = float.'},
+{tp:'M',s:[8,23],t:'mc',q:'A Pig literal is written <code>10.5e2</code> with no suffix. What is its type and how is it displayed?',o:['double, displayed as 1050.0','float, displayed as 1050.0F','long, displayed as 1050L','chararray, displayed as 10.5e2'],a:0,w:'Without F, a decimal literal is a <b>double</b> (64-bit). 10.5 × 10² is shown as <b>1050.0</b>; with F it would be a float shown as 1050.0F.'},
+{tp:'M',s:[8,23],t:'mc',q:'Which Pig type is a Unicode UTF-8 string?',o:['chararray','bytearray','biginteger','tuple'],a:0,w:'<b>chararray</b> is a character array in UTF-8; <b>bytearray</b> is a raw blob.'},
+
+/* ================= LECTURE 9 ================= */
+{tp:'W',s:[9,2],t:'mc',q:'In the comparison table, which system has high throughput but a minus for low latency, updates, random access and range access?',o:['Object stores','RDBMS','Key-value stores','HDFS'],a:0,w:'Object stores: + throughput, + larger values, + larger collections, but <b>minus</b> on latency, updates, random and range access. HDFS differs by having + range access.'},
+{tp:'W',s:[9,2],t:'mc',q:'Where does the RDBMS column of the table show a minus?',o:['High throughput and larger collections','Low latency and updates','Random access and range access','Larger values only'],a:0,w:'Relational databases are fast and support updates and random/range access, but they do <b>not scale to very large collections</b> and have <b>limited throughput</b>.'},
+{tp:'W',s:[9,2],t:'mc',q:'Key-value stores get a minus for which group of properties?',o:['High throughput, larger values and range access','Low latency, updates and random access','Larger collections and random access','Updates and larger collections'],a:0,w:'Key-value stores are great for <b>random access by key</b> with low latency, but give no range queries and are not built for large values or high-throughput scans.'},
+{tp:'W',s:[9,2],t:'mc',q:'Which plus does HDFS have that object stores do not?',o:['Range access','Low latency','Updates','Random access'],a:0,w:'Both have + throughput and large values/collections. HDFS adds <b>range access</b> (reading a contiguous part of a file); neither has low latency, updates or random access.'},
+{tp:'W',s:[9,3],t:'mc',q:'What does slide 3 claim for wide column stores?',o:['A plus in every row: throughput, latency, updates, sizes, random and range access','Only high throughput and large collections','The same profile as key-value stores','A plus for random access but a minus for range access'],a:0,w:'Wide column stores aim to <b>combine the strengths</b> of all the others: <b>+ in all seven rows</b>.'},
+{tp:'W',s:[9,4],t:'mc',q:'By design, HBase runs on…',o:['a scalable cluster of commodity hardware','one large high-end server','specialised storage appliances','the client machines of the users'],a:0,w:'Like Hadoop, it is designed for <b>a cluster of cheap commodity machines</b> that can grow by adding nodes.'},
+{tp:'W',s:[9,5],t:'mc',q:'Slide 5 places HDFS under the tables. What does that mean for HBase?',o:['HBase stores its data files on HDFS','HBase replaces HDFS completely','HDFS keeps a backup copy of HBase in a relational database','HDFS is only used for HBase logs, not data'],a:0,w:'HBase is built <b>on top of HDFS</b>: its files (HFiles, logs) live in HDFS, which gives replication and fault tolerance.'},
+{tp:'W',s:[9,6],t:'mc',q:'Which paper founded the wide column store model?',o:['Google\'s BigTable','Amazon\'s Dynamo','Google File System','Google\'s MapReduce'],a:0,w:'The founding paper is <b>Google\'s BigTable</b>; HBase is its open-source counterpart.'},
+{tp:'W',s:[9,7],t:'mc',q:'Which design decision follows the BigTable rule "store together what is accessed together"?',o:['Put columns that are usually read together in the same column family','Normalize data into many small tables','Store every column in a separate file regardless of usage','Spread the cells of each row randomly across machines'],a:0,w:'Data that is <b>accessed together is stored together</b>: column families group columns that are read together, and denormalized rows avoid joins.'},
+{tp:'W',s:[9,8],t:'mc',q:'Why are joins expensive in the tabular (normalized) model at large scale?',o:['Matching rows of two big tables usually means moving data between machines','Joins are not allowed in SQL','Each row can be read only once','Joins need a schema with column families'],a:0,w:'The arrows between the two tables show the join: rows with key 4 must be matched with row 4 of the other table. Across a cluster this <b>requires shuffling data</b>, which is costly.'},
+{tp:'W',s:[9,9],t:'mc',q:'What does the denormalized "columnar model" in slide 9 do instead of joining at query time?',o:['Stores the joined data in one wide row, so one row read gives everything','Splits each table into one file per column','Stores only foreign keys and recomputes data','Builds a B+-tree index on every column'],a:0,w:'The two tables are <b>pre-joined</b> into one wide table: the highlighted row 4 already contains the data that used to sit in the other table.'},
+{tp:'W',s:[9,9],t:'mc',q:'What is the price of denormalization, visible in slide 9?',o:['The same joined data (e.g. for key 4) is repeated in several rows','Rows can no longer be looked up by key','The table cannot be distributed','Every read needs a join'],a:0,w:'Key 4 appears twice, so its data is <b>stored twice</b>: denormalization trades <b>redundancy</b> (more storage, harder updates) for fast reads.'},
+{tp:'W',s:[9,10],t:'mc',q:'How is a row identified in the HBase logical model?',o:['By its row ID, which acts as the key of a key-value model','By an auto-incremented integer assigned by HBase','By its position in the HDFS file','By the combination of all its column values'],a:0,w:'Each row has a <b>row ID</b> (key). Seen row by row, the table is a <b>key-value model</b>: row ID → the rest of the row.'},
+{tp:'W',s:[9,10],t:'mc',q:'The row IDs appear in the order 000, 002, 0A1, 1E0, 22A, 4A2. Why?',o:['Rows are kept sorted by row ID, compared byte by byte','Rows are kept in insertion order','Rows are ordered by a hash of the row ID','Rows are sorted by their numeric value'],a:0,w:'HBase keeps rows <b>sorted lexicographically by the bytes of the row ID</b>, which enables range scans and range partitioning into regions.'},
+{tp:'W',s:[9,11],t:'mc',q:'What is a column family?',o:['A group of columns that are stored together','A copy of a column on another node','The set of all rows with the same prefix','A secondary index over one column'],a:0,w:'Columns are grouped into <b>column families</b> (purple A,B,C · yellow 1,2 · red I–IV); each family is stored separately.'},
+{tp:'W',s:[9,12],t:'mc',q:'True or false: column families must be defined when the table is created, but new columns inside a family can be added on the fly.',o:['True','False'],a:0,w:'Slides 12–13: <b>column families must be known in advance</b>, but <b>columns can be added efficiently on the fly</b> (red family grows from I to I–IV).'},
+{tp:'W',s:[9,13],t:'mc',q:'You want to store a value in a new column IV of an existing family for just one row. What is needed?',o:['Just a put with the new column qualifier; no schema change','An ALTER TABLE run by the HMaster for all rows','Recreating the table with the new column','Adding the column to every row first'],a:0,w:'Columns inside a family are <b>not part of the schema</b>; a put with a new qualifier simply creates that cell. Different rows can have different columns.'},
+{tp:'W',s:[9,14],t:'mc',q:'"Everything is binary (no types)". What does this mean?',o:['Row IDs, column names and values are just byte arrays','Only values are binary; row IDs are strings','HBase supports int, string and date types','Data is stored as text and converted when read'],a:0,w:'The arrows point at row IDs and column names: <b>row keys, qualifiers and values are all byte arrays</b>.'},
+{tp:'W',s:[9,14],t:'mc',q:'Because HBase has no types, who decides that the bytes in a cell represent an integer?',o:['The client application','The table schema','The HMaster','HDFS'],a:0,w:'HBase only stores bytes; <b>serialising and interpreting</b> them (int, string, JSON…) is the job of the <b>application</b>.'},
+{tp:'W',s:[9,15],t:'match',q:'Match each HBase operation with what it does.',o:[['Get','Reads one row by its row ID'],['Put','Inserts or updates cells of a row'],['Delete','Removes a row or some of its cells'],['Scan','Reads a range of consecutive rows']],w:'The four basic operations of slides 15–18: <b>get, put, delete, scan</b>.'},
+{tp:'W',s:[9,16],t:'mc',q:'Rows 000, 002, 0A1, 1E0, 22A, 4A2 exist. A put creates row <code>204</code>. Where does it go?',o:['Between 1E0 and 22A','After 4A2 at the end','Before 000 at the start','Between 002 and 0A1'],a:0,w:'Comparing bytes: "2" &gt; "1", so 204 comes after 1E0; and "20…" &lt; "22…", so it comes before 22A. Rows always stay <b>sorted</b>, so new rows are not appended at the end.'},
+{tp:'W',s:[9,17],t:'mc',q:'Which of the four operations works on a range of row IDs rather than on one row ID?',o:['Scan','Get','Put','Delete'],a:0,w:'Get, put and delete address <b>one row</b>; <b>scan</b> walks over a range of consecutive rows (possible because rows are sorted).'},
+{tp:'W',s:[9,18],t:'mc',q:'In the scan picture, only the yellow family is highlighted for each row. What does that show?',o:['A scan returns a range of rows and can be limited to some column families','A scan always reads one single row','A scan always returns all column families','A scan reads randomly chosen rows'],a:0,w:'A scan covers <b>a range of rows</b> and can be restricted to the <b>column families (or columns) you need</b>, which is efficient because each family is stored separately.'},
+{tp:'W',s:[9,19],t:'match',q:'Match each term with its idea.',o:[['Key-value model','Each row is looked up by a key'],['Column-oriented storage','Values of the same column are stored together'],['Wide column store','Rows by key, with columns grouped into separately stored families']],w:'A wide column store combines both: <b>key-value access by row ID</b> and <b>column(-family)-oriented storage</b>.'},
+{tp:'W',s:[9,20],t:'mc',q:'Column-oriented storage is most useful when a query…',o:['reads a few columns of many rows','reads every column of one row','updates single cells at random','joins many small tables'],a:0,w:'Storing <b>values of the same column together</b> means a query that needs only some columns reads only those, not entire rows.'},
+{tp:'W',s:[9,21],t:'mc',q:'Why is the model called "wide column"?',o:['Rows can have very many, and different, columns grouped into families','Every column must have a large data type','Each column is stored on its own machine','Tables can have at most one column family'],a:0,w:'A row can be <b>very wide</b>: many columns, added on the fly, which can differ from row to row, organised in column families.'},
+{tp:'W',s:[9,22],t:'multi',q:'Select <b>all</b> wide column stores shown in the lecture.',o:['Google BigTable','Apache HBase','Apache Cassandra','HDFS','Apache Pig'],a:[0,1,2],w:'<b>BigTable, HBase and Cassandra</b> are wide column stores. HDFS is a file system and Pig is a dataflow language.'},
+
+/* ================= LECTURE 10 ================= */
+{tp:'H',s:[10,2],t:'mc',q:'How is an HBase table split into regions?',o:['Into contiguous ranges of row IDs','By hashing each row ID','Into one region per column family','Into random groups of rows'],a:0,w:'A region is a <b>contiguous range of rows</b> (the green block), possible because rows are sorted by row ID.'},
+{tp:'H',s:[10,4],t:'mc',q:'A region has min key <code>b</code> (inclusive) and max key <code>f</code> (exclusive). Which row key belongs to it?',o:['f','e9','a9','fa'],a:1,w:'Range is <b>[min-incl., max-excl.)</b>. "e9" is ≥ "b" and &lt; "f", so it is inside. "f" itself belongs to the next region; "a9" is before b; "fa" is after f.'},
+{tp:'H',s:[10,3],t:'mc',q:'Why partition by key ranges instead of by hash?',o:['A scan over consecutive keys touches only one or a few regions','Hashing would make gets impossible','Ranges guarantee equal-sized regions','Ranges let HBase avoid HDFS'],a:0,w:'Since neighbouring keys sit in the <b>same region</b>, <b>range scans</b> stay local to few servers. With hashing, a range would be spread over all servers.'},
+{tp:'H',s:[10,5],t:'mc',q:'Slide 5 marks part of a region "stored together". Which part?',o:['The cells of one column family within that region','The whole region across all families','One single row across all families','One column across all regions'],a:0,w:'Inside a region, <b>each column family is stored separately</b>; the cells of one family in one region are stored together (later called a <b>store</b>).'},
+{tp:'H',s:[10,6],t:'mc',q:'"The same procedure as every year, James." What does the lecturer mean by this?',o:['HBase reuses the master/worker architecture already seen in HDFS','HBase must be reinstalled every year','HBase runs the same MapReduce job repeatedly','HBase copies all data once a year'],a:0,w:'The architecture follows the <b>same pattern as HDFS</b>: one master (namenode / HMaster) and many workers (datanodes / RegionServers).'},
+{tp:'H',s:[10,8],t:'match',q:'Match each HDFS concept with its HBase counterpart.',o:[['Namenode','HMaster'],['Datanode','RegionServer'],['Block of a file','Region of a table']],w:'Slides 7–8 put the two side by side: <b>namenode ↔ HMaster</b>, <b>datanodes ↔ RegionServers</b>, and the master knows which <b>blocks / regions</b> live where.'},
+{tp:'H',s:[10,9],t:'multi',q:'Select <b>all</b> jobs of the HMaster shown in slides 10–15.',o:['Creating and deleting tables (DDL)','Assigning regions to RegionServers','Handling RegionServer failovers','Splitting regions that grew too big','Serving every get and put of clients','Storing the HFiles on its local disk'],a:[0,1,2,3],w:'The HMaster does <b>DDL, region assignment, failover and region splitting</b>. Reads and writes go to <b>RegionServers</b>, and HFiles live in <b>HDFS</b>.'},
+{tp:'H',s:[10,10],t:'mc',q:'Which of these is a DDL operation handled by the HMaster?',o:['Creating a table','Putting a cell','Getting a row','Scanning a range'],a:0,w:'DDL = <b>create / delete (alter) table</b>. Put, get and scan are data operations served by RegionServers.'},
+{tp:'H',s:[10,12],t:'mc',q:'In slide 12, regions of one table point to several RegionServers. Which statement is true?',o:['A RegionServer can host several regions, not necessarily adjacent ones','Each RegionServer hosts exactly one region','All regions of a table must sit on the same RegionServer','Regions are copied to every RegionServer'],a:0,w:'The HMaster <b>spreads regions over RegionServers</b>; one server typically hosts many regions, which need not be neighbours (the arrows cross).'},
+{tp:'H',s:[10,13],t:'mc',q:'A RegionServer crashes. What does the HMaster do?',o:['Reassigns that server\'s regions to the remaining RegionServers','Restores the regions from a nightly backup','Waits until the server comes back','Deletes the affected regions'],a:0,w:'Slides 13 and 15: the HMaster <b>handles failovers</b> by giving the orphaned regions to <b>other RegionServers</b>.'},
+{tp:'H',s:[10,15],t:'mc',q:'Why can another RegionServer take over a failed server\'s regions without copying the data first?',o:['The region data is in HDFS, which every RegionServer can read','The HMaster keeps a copy of all data in memory','Each region is fully duplicated on all RegionServers','The client resends all of its data'],a:0,w:'HFiles are stored <b>in HDFS (replicated)</b>, not on the RegionServer itself, so the new server simply <b>opens the same files</b>.'},
+{tp:'H',s:[10,14],t:'mc',q:'What happens when a region becomes too big?',o:['It is split into two regions, which can live on different servers','It is moved to a bigger machine','New rows are rejected','It is compressed into a single HFile'],a:0,w:'"Regions that are too big are <b>split</b>": the black part becomes its own region, which can be assigned to another server to balance load.'},
+{tp:'H',s:[10,17],t:'mc',q:'What does a RegionServer do?',o:['Serves reads and writes for the regions assigned to it','Creates and deletes tables','Decides which regions every server gets','Stores the namespace of HDFS'],a:0,w:'RegionServers are the <b>workers</b>: they handle client <b>gets, puts and scans</b> for their regions.'},
+{tp:'H',s:[10,19],t:'mc',q:'A table has 3 column families and is split into 2 regions. How many stores does it have?',o:['6','3','2','5'],a:0,w:'<b>Store = (region, column family)</b>, so 2 regions × 3 families = <b>6 stores</b>, exactly like slide 19.'},
+{tp:'H',s:[10,20],t:'mc',q:'A store is defined by…',o:['a region together with a column family','a region together with a column','a row together with a column family','a RegionServer together with a table'],a:0,w:'Slide 20: <b>Store = (Region, Column family)</b>: the vertical arrow is the region, the horizontal one the column family.'},
+{tp:'H',s:[10,21],t:'mc',q:'Which statement about a single cell is correct?',o:['It belongs to exactly one store, given by its row (region) and its family','It is spread across several stores','It is copied into every store of the region','It is stored in the HMaster'],a:0,w:'The <b>row</b> decides the region and the <b>column family</b> decides the family, so a cell sits in <b>exactly one store</b>.'},
+{tp:'H',s:[10,22],t:'mc',q:'How is a store persisted?',o:['As one or more HFiles stored on HDFS','As one table in a relational database','As one HDFS block per cell','As files on the RegionServer\'s local disk outside HDFS'],a:0,w:'A store is written as <b>HFiles (on HDFS)</b>; there can be several per store.'},
+{tp:'H',s:[10,24],t:'mc',q:'What is an HFile, at heart?',o:['A sorted list of key-value pairs (Google\'s SSTable)','An unsorted log of writes','A B+-tree index over rows','A CSV file of rows'],a:0,w:'"That\'s actually <b>a sorted list of key-value pairs</b>", the HBase version of Google\'s SSTable.'},
+{tp:'H',s:[10,25],t:'order',q:'A logical table has rows A, B, C and columns 1, 2. Put its cells in the order they appear in the HFile.',o:['A1','A2','B1','B2','C1','C2'],w:'Cells are sorted by key, and the key starts with the <b>row</b>, then the column: <b>A1, A2, B1, B2, C1, C2</b>.',pv:'<table style="border-collapse:collapse;font:13px monospace"><tr><td style="padding:4px 10px;background:#c0503a;color:#fff">A1</td><td style="padding:4px 10px;background:#3a6fb0;color:#fff">A2</td><td style="padding:4px 10px;background:#6b5ea8;color:#fff">B1</td><td style="padding:4px 10px;background:#e6c84f">B2</td><td style="padding:4px 10px;background:#111;color:#fff">C1</td><td style="padding:4px 10px;background:#3b9b6b;color:#fff">C2</td></tr></table>'},
+{tp:'H',s:[10,26],t:'mc',q:'Cell A1 has four versions. In which order are they stored in the HFile?',o:['Newest version first','Oldest version first','In random order','Only the newest is stored'],a:0,w:'The versions are next to each other with <b>"Latest" on top</b> (version 4, 3, 2, 1): newest timestamp first.'},
+{tp:'H',s:[10,27],t:'mc',q:'A client writes cell A1 four times (V1 → V4). What does a normal get of A1 return?',o:['V4, the latest version','V1, the first version','All four versions concatenated','An error, because the cell is ambiguous'],a:0,w:'Versions are kept along a <b>timeline</b>; a get returns the <b>latest</b> one by default (older versions can be requested explicitly).'},
+{tp:'H',s:[10,29],t:'mc',q:'Each KeyValue in an HFile starts with keylength and valuelength. Why?',o:['Keys and values have variable size, so a reader must know where each part ends','To encrypt the key and the value','To store the number of versions','To mark the KeyValue as deleted'],a:0,w:'Layout: <b>keylength | valuelength | key | value</b>. Since sizes vary, the lengths let a reader <b>parse and skip</b> to the next KeyValue.'},
+{tp:'H',s:[10,30],t:'order',q:'Put the fields of an HFile <b>key</b> in order.',o:['row length','row (key)','column family length','column family','column qualifier','timestamp','key type'],w:'Key = <b>row length, row, column family length, column family, column qualifier, timestamp, key type</b>.'},
+{tp:'H',s:[10,30],t:'match',q:'Match each key field with its purpose.',o:[['timestamp','Versioning of the cell'],['key type','Marking a cell as deleted'],['row length','Knowing where the row key ends'],['column family','Which family the cell belongs to']],w:'Slide 30: the <b>timestamp</b> is "for the versioning" and the <b>key type</b> is "for marking as deleted".'},
+{tp:'H',s:[10,30],t:'mc',q:'The key has a row length and a column family length, but no qualifier length. How can a reader find where the qualifier ends?',o:['From keylength minus the other, fixed or length-prefixed, fields','The qualifier always has a fixed length of 8 bytes','A special end marker follows the qualifier','It cannot; the qualifier is read until the value starts'],a:0,w:'Timestamp and key type have <b>fixed sizes</b>, and row and family carry lengths, so the qualifier length = <b>keylength − everything else</b>.'},
+{tp:'H',s:[10,31],t:'mc',q:'What is the default size of an HBlock?',o:['64 kB','128 MB','4 kB','1 GB'],a:0,w:'An HBlock is the "quantity" of KeyValues read at a time; the <b>default is 64 kB</b>.'},
+{tp:'H',s:[10,31],t:'mc',q:'Which statement correctly separates an HBlock from an HDFS block?',o:['An HBlock (64 kB) is the unit read from an HFile; an HDFS block (128 MB) is a storage unit of the file system','They are the same thing','An HBlock is bigger than an HDFS block','An HDFS block is the unit HBase uses for its index'],a:0,w:'Do not mix them up: <b>HBlocks are small read units inside an HFile</b> (64 kB), while the HFile itself is stored in large <b>HDFS blocks</b>.'},
+{tp:'H',s:[10,32],t:'mc',q:'What does the /index part of an HFile store?',o:['The first key of each HBlock, pointing to that block','Every key of the HFile','The row count of each region','The list of RegionServers'],a:0,w:'The index lists <b>one key per HBlock</b> (key1, key5, key11, key17) with a pointer to the block in /data.'},
+{tp:'H',s:[10,33],t:'mc',q:'The index contains key1, key5, key11, key17. In which HBlock can key14 be?',o:['The block starting with key11','The block starting with key17','The block starting with key5','Any block; all must be scanned'],a:0,w:'key11 ≤ key14 &lt; key17, so key14 can only be in the <b>block that starts at key11</b>.'},
+{tp:'H',s:[10,33],t:'mc',q:'Why is looking up a key in an HFile fast?',o:['The index is kept in memory, so only one HBlock has to be read from disk','The whole HFile is always in memory','HFiles are hash tables','HDFS returns single KeyValues directly'],a:0,w:'The RAM picture under the index: the <b>index is loaded in memory</b>, a binary search picks the block, and only <b>one 64 kB block</b> is read.'},
+{tp:'H',s:[10,39],t:'order',q:'Order the storage units from the largest to the smallest.',o:['Table','Region','Store','HFile','HBlock','KeyValue'],w:'Slides 34–39 zoom in step by step: <b>Table → Region → Store → HFile → HBlock → KeyValue</b>.'},
+{tp:'H',s:[10,41],t:'mc',q:'Why can key-values only be written to an HFile in sorted order?',o:['HFiles are sorted files on HDFS, which only supports appending','HBase writes faster in sorted order but could insert anywhere','The HMaster requires it for DDL','Sorting is needed for replication'],a:0,w:'An HFile must stay <b>sorted</b>, and HDFS files can only be <b>appended</b> to, never edited in the middle. So you can only write in sorted order.'},
+{tp:'H',s:[10,42],t:'mc',q:'New keys arrive in random order. How does HBase handle them?',o:['It collects them in an in-memory MemStore and later writes a new sorted HFile','It rewrites the existing HFile in place','It appends them unsorted to the existing HFile','It rejects keys that are smaller than the last key'],a:0,w:'"How can we insert new values?" Answer: buffer them in the <b>MemStore</b> (RAM), then <b>flush</b> them as a new sorted HFile.'},
+{tp:'H',s:[10,45],t:'mc',q:'Where do the MemStore and the HFiles live?',o:['MemStore in memory; HFiles on disk (HDFS)','Both in memory','Both on disk','MemStore on disk; HFiles in memory'],a:0,w:'The RAM module is next to the <b>MemStore</b>, the hard disk next to the <b>HFiles</b>.'},
+{tp:'H',s:[10,46],t:'mc',q:'A client puts a new cell. Where does it go (apart from the log)?',o:['Into the MemStore of the matching store','Directly into the newest HFile','Into a new HDFS block','Into the HMaster'],a:0,w:'Writing new cells: they land in the <b>MemStore</b> until it is full.'},
+{tp:'H',s:[10,49],t:'mc',q:'A store has one HFile and its MemStore becomes full. After the flush, how many HFiles does it have?',o:['2','1','0','3'],a:0,w:'A flush <b>sorts the MemStore and writes it as a new HFile</b>; the old HFile is untouched, so there are now <b>2</b>. The MemStore is then empty.'},
+{tp:'H',s:[10,49],t:'mc',q:'What happens to the existing HFiles during a flush?',o:['Nothing; a flush only adds a new HFile','They are merged with the MemStore into one HFile','They are deleted','They are moved into memory'],a:0,w:'Flushing never edits existing files (HFiles are immutable). Merging HFiles is a separate step: <b>compaction</b> (Lecture 11).'},
+{tp:'H',s:[10,54],t:'order',q:'Put the steps of a write in order.',o:['The client sends a put','The cell is appended to the write-ahead log (HLog)','The cell is inserted into the MemStore','The write is acknowledged'],w:'Slides 52–54: the new cells go to the <b>HLog</b> and the <b>MemStore</b>, and only then is the write confirmed (green tick).'},
+{tp:'H',s:[10,53],t:'mc',q:'Why does HBase write every change to a write-ahead log?',o:['The MemStore is in RAM; after a crash the log can be replayed','To make reads faster','To replace HFiles','To keep old versions forever'],a:0,w:'Without the <b>WAL (HLog)</b>, unflushed MemStore data would be <b>lost on a crash</b>. The log is on HDFS and is replayed on recovery.'},
+{tp:'H',s:[10,53],t:'mc',q:'The WAL is on disk. Why does writing to it not slow writes down much?',o:['It is only appended to, which is sequential and fast','It is written once per day','It is stored in RAM only','It only stores row IDs, not values'],a:0,w:'The log is <b>append-only</b>: sequential writes avoid seeks, so they are cheap.'},
+{tp:'H',s:[10,55],t:'multi',q:'Select <b>all</b> events that trigger a flush.',o:['A store\'s MemStore reaches its maximum size','All MemStores together reach the overall maximum','The write-ahead log is full','A client sends a get','An HFile reaches 64 kB'],a:[0,1,2],w:'Flush when: <b>max MemStore size in a store</b>, <b>overall max MemStore size</b>, or a <b>full write-ahead log</b>.'},
+{tp:'H',s:[10,55],t:'mc',q:'Why does a full write-ahead log trigger a flush?',o:['Once the data is in HFiles, the old log entries are no longer needed and can be dropped','The log is merged into the HFiles','Reads cannot work while the log is full','The HMaster requests it'],a:0,w:'Log entries only protect <b>unflushed</b> data. After a flush they are not needed for recovery, so the log can be <b>cleaned up</b>.'},
+
+/* ================= LECTURE 11 ================= */
+{tp:'R',s:[11,2],t:'mc',q:'To read a key from a store, where must HBase look?',o:['In the MemStore and in all HFiles of the store, merging the results','Only in the newest HFile','Only in the MemStore','Only in the oldest HFile'],a:0,w:'Reading from a store means checking the <b>MemStore and every HFile</b> (green entries in slide 3) and merging them.'},
+{tp:'R',s:[11,3],t:'mc',q:'Why might a read need data from several HFiles of the same store?',o:['Each flush writes a new file, so key ranges overlap and versions are spread out','Each HFile holds a different column family','HFiles are copies of each other','HDFS splits every key over several files'],a:0,w:'Every flush creates a new HFile covering <b>any keys</b>, so files <b>overlap</b>: a row\'s cells or newer versions can be in several files.'},
+{tp:'R',s:[11,4],t:'mc',q:'What is compaction?',o:['Merging several HFiles of a store into one sorted HFile','Compressing a single HFile','Moving HFiles from HDFS into memory','Splitting a region into two'],a:0,w:'Slides 4–6: several HFiles are <b>merged into one HFile</b> (sorted again).'},
+{tp:'R',s:[11,6],t:'mc',q:'Each input HFile is already sorted. Why does compaction still say "sort again"?',o:['The keys of different files interleave, so they must be merged into one sorted order','The input files are actually unsorted','Compaction sorts by value instead of key','HDFS shuffles the blocks'],a:0,w:'Each file is sorted on its own, but together they <b>interleave</b>; a <b>merge</b> (as in merge sort) produces one sorted file.'},
+{tp:'R',s:[11,5],t:'mc',q:'How does compaction help later reads?',o:['There are fewer HFiles to check per read','It deletes the MemStore','It moves data to the HMaster','It makes HBlocks bigger'],a:0,w:'Reads must look into every HFile of a store, so <b>fewer files = fewer lookups</b>.'},
+{tp:'R',s:[11,7],t:'mc',q:'Which pairing matches slide 7?',o:['RDBMS: B+-trees, seek-time-bound · Wide column stores: LSM-trees, transfer-time-bound','RDBMS: LSM-trees, transfer-time-bound · Wide column stores: B+-trees, seek-time-bound','Both use B+-trees and are seek-time-bound','Both use LSM-trees and are transfer-time-bound'],a:0,w:'Classical RDBMS use <b>B+-trees</b> and are <b>seek-time-bound</b>; wide column stores use <b>LSM-trees</b> and are <b>transfer-time-bound</b>.'},
+{tp:'R',s:[11,7],t:'mc',q:'Why is an LSM-tree limited by transfer time rather than seek time?',o:['It writes and merges large sorted files sequentially, with few seeks','It does one disk seek per inserted key','It keeps all data in memory','It never reads from disk'],a:0,w:'B+-trees update pages in place (many <b>random seeks</b>). LSM-trees <b>append and merge big sorted runs sequentially</b>, so the cost is the transfer of data.'},
+{tp:'R',s:[11,8],t:'mc',q:'In the LSM-tree picture, how does data move?',o:['From a small sorted run in memory, merged into larger and larger runs on disk','From disk into memory, where it is merged','Randomly between memory and disk','Directly into one big file that is updated in place'],a:0,w:'New data starts in <b>RAM</b>, is written as a small sorted run, and gets <b>merged</b> into larger runs on disk step by step.'},
+{tp:'R',s:[11,13],t:'mc',q:'In the merge policy of the animation, when are HFiles merged?',o:['When two HFiles of the same size exist, they are merged into one of double size','After every single put','Only once per day','Whenever a read happens'],a:0,w:'Two equal-sized HFiles → <b>merge into one twice as big</b>, like carrying in binary addition.'},
+{tp:'R',s:[11,17],t:'mc',q:'The store has two small HFiles and one medium HFile. What does merging produce?',o:['One large HFile','Two medium HFiles','One medium and one small HFile','Three small HFiles'],a:0,w:'small + small → medium; then medium + medium → <b>large</b> (slides 16–18). It works like a binary counter carrying over.'},
+{tp:'R',s:[11,21],t:'mc',q:'Starting empty, the store is flushed 7 times with equally sized flushes. How many HFiles does it have under this merge policy?',o:['3','7','1','2'],a:0,w:'7 = 4 + 2 + 1, so there are <b>3 HFiles</b> (large, medium, small), exactly what slide 21 shows. The number of files = the number of 1-bits in the flush count.'},
+{tp:'R',s:[11,20],t:'mc',q:'After 6 equal flushes, which HFiles exist?',o:['One of size 4 and one of size 2','Six of size 1','One of size 6','One of size 4, one of size 1 and one of size 1'],a:0,w:'6 = 4 + 2 in binary (110): <b>large + medium</b>, as in slide 20 after the merge.'},
+{tp:'R',s:[11,22],t:'mc',q:'What does this merge policy achieve?',o:['Few HFiles (logarithmic in the number of flushes) while each KeyValue is rewritten only a few times','Exactly one HFile at all times','No merging work at all','One HFile per put'],a:0,w:'Reads stay cheap because there are only <b>about log(n) files</b>, and writes stay cheap because each KeyValue is merged only <b>about log(n) times</b>.'},
+{tp:'R',s:[11,23],t:'mc',q:'What is optimization 1, the cache?',o:['HBlocks read from disk are kept in memory for later reads','The MemStore is copied to disk','HFiles are kept on the client','Writes are delayed for an hour'],a:0,w:'Next to the MemStore, a <b>cache</b> in RAM holds HBlocks that were read from HFiles, so repeated reads skip the disk.'},
+{tp:'R',s:[11,24],t:'multi',q:'Select <b>all</b> situations in which the lecture says <b>not</b> to use the cache.',o:['Batch processing that reads all the data once','Random access spread over the whole table','Reading the same popular rows again and again'],a:[0,1],w:'Caching only pays off when blocks are <b>read again</b>. In <b>batch processing</b> each block is read once; with <b>random access</b> there is no reuse. Hot rows are exactly where a cache helps.'},
+{tp:'R',s:[11,24],t:'mc',q:'Why does caching hurt in batch processing?',o:['Each block is read only once, so caching wastes memory and evicts useful blocks','Batch jobs cannot read HFiles','The cache makes sequential reads slower than random reads','Batch jobs write to the cache instead of the MemStore'],a:0,w:'A full scan touches every block <b>once</b>. Caching those blocks gives no hits and <b>pushes out</b> blocks that other clients would reuse.'},
+{tp:'R',s:[11,26],t:'mc',q:'An HFile stores its key range (min = d, max = k). A get asks for key <code>m</code>, another for key <code>f</code>. What follows?',o:['The file can be skipped for m; for f it still has to be checked','Key f is definitely in the file','Both keys are definitely in the file','The file must be read for both keys'],a:0,w:'Key ranges tell <b>for sure</b> when a key is <b>not</b> in a file (m &gt; k). For f the range only says "possible", so the file is checked.'},
+{tp:'R',s:[11,27],t:'mc',q:'What can a Bloom filter tell you about a key and an HFile?',o:['For sure that the key is not in the file, or that it might be','For sure that the key is in the file','The exact position of the key in the file','How many versions of the key exist'],a:0,w:'A Bloom filter has <b>no false negatives</b> ("definitely not here") but can have false positives ("maybe here").'},
+{tp:'R',s:[11,27],t:'mc',q:'True or false: if an HFile\'s Bloom filter answers "maybe", the key is guaranteed to be in that HFile.',o:['True','False'],a:1,w:'"Maybe" can be a <b>false positive</b>. The file must still be read. Only the "no" answer is certain.'},
+{tp:'R',s:[11,26],t:'mc',q:'How do key ranges and Bloom filters complement each other?',o:['Key ranges can rule out whole ranges of keys; Bloom filters rule out single keys inside the range','Both give exact answers','Bloom filters work for ranges, key ranges for single keys','They are two names for the same structure'],a:0,w:'Key ranges (min, max) say a <b>key range</b> is not in a file (useful for scans). Bloom filters say a <b>single key</b> is not in a file, even when it falls inside the range (useful for gets).'},
+{tp:'R',s:[11,28],t:'mc',q:'What is <code>hbase:meta</code>?',o:['A special HBase table that records which RegionServer hosts each region','A configuration file on the HMaster','The write-ahead log of all RegionServers','A Bloom filter for all tables'],a:0,w:'Bootstrap: <b>hbase:meta</b> is itself an HBase table and describes where the regions of <b>regular tables</b> are.'},
+{tp:'R',s:[11,32],t:'order',q:'Put the steps of a client reading a row in order.',o:['The client asks the RegionServer hosting hbase:meta which server holds the region','It receives the RegionServer location','It caches that location','It sends the query directly to that RegionServer'],w:'Slides 31–33: ask <b>hbase:meta</b> → get location → <b>cache</b> it → query the RegionServer <b>directly</b>. The HMaster is not involved.'},
+{tp:'R',s:[11,30],t:'mc',q:'When does a client talk to the HMaster?',o:['Only to create, delete or update tables','For every get','For every put','To find out which RegionServer hosts a row'],a:0,w:'Slide 30: the client contacts the HMaster for <b>create/delete/update table</b>. Region locations come from hbase:meta.'},
+{tp:'R',s:[11,32],t:'mc',q:'Why does the client keep a cache of region locations?',o:['So it does not have to ask hbase:meta before every request','So it can store rows locally','Because the HMaster requires it','To replace the block cache'],a:0,w:'With a <b>cache of locations</b>, later requests go straight to the right RegionServer, saving a round trip and load on hbase:meta.'},
+{tp:'R',s:[11,33],t:'mc',q:'True or false: ordinary reads and writes do not pass through the HMaster.',o:['True','False'],a:0,w:'The data path is <b>client → RegionServer</b> (using hbase:meta). The HMaster only handles admin work, so it is <b>not a bottleneck</b> for queries.'},
+{tp:'R',s:[11,34],t:'mc',q:'Which access APIs are shown for HBase?',o:['REST and Java','SQL and ODBC only','Only a command-line shell','Pig Latin and HiveQL'],a:0,w:'Slide 34 shows <b>REST</b> and <b>Java</b>.'},
+{tp:'R',s:[11,35],t:'mc',q:'In slide 35, the RegionServer and its HFile blocks are on the same machine. Why does this matter?',o:['RegionServers run next to datanodes, so reads of their own HFiles are local','HBase and HDFS must run on separate machines','The machine stores no replicas','The RegionServer stores data outside HDFS'],a:0,w:'A RegionServer is <b>colocated with a datanode</b>; when its HFile blocks are on that datanode, reads avoid the network (<b>data locality</b>).'},
+{tp:'R',s:[11,36],t:'mc',q:'What does the HDFS load balancer do to HBase in slide 36?',o:['It moves blocks to other datanodes, so the RegionServer loses locality','It makes all reads local','It deletes old HFiles','It splits regions'],a:0,w:'The balancer spreads blocks evenly, but HDFS knows nothing about HBase: blocks move to other machines and the RegionServer must <b>read remotely</b>.'},
+{tp:'R',s:[11,37],t:'mc',q:'Why does HFile compaction bring back locality?',o:['The RegionServer writes the new HFile, and HDFS stores a replica on the local datanode','Compaction copies the HMaster\'s data back','Compaction disables the load balancer','Compaction moves the RegionServer to where the blocks are'],a:0,w:'Compaction <b>rewrites</b> the data into a new HFile; the writer is the RegionServer, and HDFS puts a <b>replica on the writer\'s datanode</b>.'},
+{tp:'R',s:[11,38],t:'match',q:'Match each tool with its role in the "What about SQL?" slide.',o:[['Apache Phoenix','Low-latency SQL (OLTP) on HBase'],['Hive','Reporting (OLAP)'],['Spark','Analytics'],['Trino / Presto','Federated queries'],['Flink','Streaming']],w:'The slide groups the ecosystem by use: <b>Phoenix</b> OLTP, <b>Hive</b> (on MapReduce) reporting, <b>Spark</b> analytics, <b>Trino/Presto</b> federated, <b>Flink</b> streaming.'},
+{tp:'R',s:[11,39],t:'mc',q:'How does the Spanner data model differ from HBase?',o:['Rows have a multi-column primary key and a timestamp; ranges of rows form tablets','Spanner has no keys at all','Spanner stores each column on a different machine','Spanner uses one byte-array row ID like HBase'],a:0,w:'Spanner: <b>multi-column primary key</b> + <b>timestamp</b>, and rows are grouped into <b>tablets</b> (similar to regions).'},
+{tp:'R',s:[11,39],t:'mc',q:'A Spanner tablet is most similar to which HBase concept?',o:['A region','A column family','An HBlock','The write-ahead log'],a:0,w:'A <b>tablet</b> is a range of rows assigned to a server, like an HBase <b>region</b>.'},
+{tp:'R',s:[11,40],t:'mc',q:'What scale does slide 40–42 give for Spanner?',o:['Trillions of rows on millions of machines','Thousands of rows on one machine','Millions of rows on a few hundred machines','Billions of tables on ten machines'],a:0,w:'"<b>1,000,000,000,000s of rows</b>" and "<b>1,000,000s of machines</b>".'},
+{tp:'R',s:[11,41],t:'mc',q:'What sits at the top of the Spanner architecture tree?',o:['A universemaster that oversees zones of servers','An HMaster for every table','A single namenode','A JobTracker'],a:0,w:'The <b>universemaster</b> is at the root; below it are <b>zones</b>, each with many servers.'},
+
+/* ================= LECTURE 12 ================= */
+{tp:'D',s:[12,2],t:'order',q:'Put the four stages of the lab in order.',o:['Set up the cluster','Load data into HDFS','Run WordCount','Read the results'],w:'Four stages, nine steps: <b>set up (1–2) → load data (3–5) → run WordCount (6–8) → read results (9)</b>.'},
+{tp:'D',s:[12,3],t:'match',q:'Match each container with its role.',o:[['namenode','HDFS master, tracks which blocks live where'],['datanode','HDFS worker, stores the data blocks'],['resourcemanager','YARN master, schedules jobs'],['nodemanager','YARN worker, runs map and reduce tasks'],['historyserver','Keeps logs of finished jobs']],w:'Five containers: two for <b>HDFS</b> (namenode, datanode), two for <b>YARN</b> (resourcemanager, nodemanager) plus the <b>historyserver</b>.'},
+{tp:'D',s:[12,3],t:'mc',q:'In this lab cluster, which container actually executes the map and reduce tasks?',o:['nodemanager','namenode','resourcemanager','historyserver'],a:0,w:'The <b>nodemanager</b> is the YARN worker that runs tasks; the resourcemanager only schedules.'},
+{tp:'D',s:[12,3],t:'mc',q:'From which container do the students run their HDFS commands?',o:['namenode','datanode','nodemanager','historyserver'],a:0,w:'"HDFS master … <b>We work from here.</b>" All hdfs/hadoop commands go through the namenode container.'},
+{tp:'D',s:[12,4],t:'mc',q:'The input file contains <code>hello hadoop</code> and <code>hello world</code>. How many pairs do the mappers emit?',o:['4','3','2','1'],a:0,w:'One (word, 1) per word: (hello,1), (hadoop,1), (hello,1), (world,1) = <b>4 pairs</b>.'},
+{tp:'D',s:[12,4],t:'mc',q:'After shuffle and sort, what does the group for <code>hello</code> look like?',o:['hello → [1, 1]','hello → 2','hello → [1]','(hello, 1), (hello, 1) on two reducers'],a:0,w:'Shuffle and sort only <b>group</b> the values; the reducer does the sum. So the group is <b>hello → [1, 1]</b>.'},
+{tp:'D',s:[12,4],t:'mc',q:'WordCount runs on the line <code>a b a c a b</code>. What is the output?',o:['a 3, b 2, c 1','a 1, b 1, c 1','a 3, b 2','a [1,1,1], b [1,1], c [1]'],a:0,w:'Map emits (word,1) for all 6 words, shuffle groups them, reduce sums each group: <b>a 3, b 2, c 1</b>.'},
+{tp:'D',s:[12,5],t:'mc',q:'Your prompt shows <code>root@a1b2c3d4:/#</code>. Where are you?',o:['Inside the namenode container','In your normal host terminal','Inside HDFS','On the datanode container'],a:0,w:'A prompt starting with <b>root@…</b> means you are <b>inside the container</b>; your host prompt looks like student@laptop.'},
+{tp:'D',s:[12,5],t:'mc',q:'How do you open a shell inside the namenode and leave it again?',o:['docker exec -it namenode bash, then exit','docker cp namenode bash, then quit','docker-compose up namenode, then stop','hdfs dfs -shell, then logout'],a:0,w:'<b>docker exec -it namenode bash</b> opens a shell in the container; <b>exit</b> returns you to the host.'},
+{tp:'D',s:[12,6],t:'mc',q:'What does cloning the docker-hadoop repository give you?',o:['A docker-compose.yml describing the cluster and a submit/ folder with WordCount.jar','A running Hadoop cluster','The input file test.txt','A copy of HDFS data'],a:0,w:'Step 1 downloads the <b>docker-compose.yml</b> and <b>submit/WordCount.jar</b>; nothing is started yet.'},
+{tp:'D',s:[12,7],t:'mc',q:'What does <code>-d</code> mean in <code>docker-compose up -d</code>?',o:['Detached: start the containers in the background','Debug mode','Delete old containers first','Download images only'],a:0,w:'<b>-d = detached</b>: the five containers run in the background and you keep your terminal.'},
+{tp:'D',s:[12,7],t:'mc',q:'After <code>docker-compose up -d</code>, what should <code>docker ps</code> show?',o:['5 containers with STATUS Up','1 container named hadoop','No containers, until a job is submitted','9 containers, one per step'],a:0,w:'Step 2 expects <b>5 containers, STATUS: Up</b>.'},
+{tp:'D',s:[12,8],t:'mc',q:'What does <code>-it</code> do in <code>docker exec -it namenode bash</code>?',o:['Gives you an interactive terminal','Installs tools in the container','Runs the command in the background','Copies the shell into the container'],a:0,w:'<b>-it</b> = interactive + terminal, so you can type commands in the container\'s shell.'},
+{tp:'D',s:[12,9],t:'mc',q:'Inside the namenode you run <code>echo "hello hadoop hello world" &gt; /tmp/test.txt</code>. Where is the file now?',o:['On the container\'s local disk, not yet in HDFS','In HDFS under /input','On your laptop\'s /tmp','On the datanode'],a:0,w:'The file is on the <b>container\'s own disk (/tmp)</b>. It reaches HDFS only in step 5 with hdfs dfs -put.'},
+{tp:'D',s:[12,10],t:'mc',q:'What does <code>hdfs dfs -put -f /tmp/test.txt /input/</code> do?',o:['Copies the local file into the HDFS folder /input, overwriting if needed','Moves the file from HDFS to local /tmp','Creates an empty folder /input','Prints the file contents'],a:0,w:'<b>-put</b> uploads a local file into HDFS; <b>-f</b> forces an overwrite. hdfs dfs works like Linux file commands, but on HDFS.'},
+{tp:'D',s:[12,10],t:'mc',q:'In the output <code>-rw-r--r--  3 root … /input/test.txt</code>, what does the <code>3</code> mean?',o:['The replication factor of the file','The number of lines in the file','The number of datanodes that are down','The file size in kB'],a:0,w:'In hdfs dfs -ls, the column after the permissions is the <b>replication factor</b> (default 3), not a link count as in Linux.'},
+{tp:'D',s:[12,10],t:'mc',q:'Step 5 runs <code>docker exec namenode hdfs dfs …</code> from the host. Why does that work without opening a shell first?',o:['docker exec runs a single command inside the container','hdfs is installed on the laptop','The command is sent to HDFS over HTTP','The host and container share one file system'],a:0,w:'Without -it, <b>docker exec</b> just runs <b>one command inside the container</b> and returns.'},
+{tp:'D',s:[12,11],t:'mc',q:'What is WordCount.jar?',o:['A packaged Java program with the Map and Reduce code','The input data for the job','A Docker image','The HDFS configuration'],a:0,w:'The JAR contains the <b>compiled Map and Reduce classes</b>; it came with the repository.'},
+{tp:'D',s:[12,12],t:'mc',q:'Which command copies the JAR from your laptop into the namenode container?',o:['docker cp submit/WordCount.jar namenode:/tmp/WordCount.jar','docker cp namenode:/tmp/WordCount.jar submit/WordCount.jar','hdfs dfs -put submit/WordCount.jar /tmp/','docker exec namenode cp submit/WordCount.jar /tmp/'],a:0,w:'docker cp takes <b>source then destination</b>, with <b>container:path</b> for the container side. The reversed version copies the other way.'},
+{tp:'D',s:[12,13],t:'mc',q:'In <code>hadoop jar /tmp/WordCount.jar WordCount /input /output</code>, what are WordCount, /input and /output?',o:['The main class; the HDFS input path; the HDFS output path','The JAR name; local folders on the laptop','The job name; two container names','The reducer class; the mapper class; the combiner'],a:0,w:'<b>WordCount</b> is the main class; <b>/input</b> and <b>/output</b> are <b>HDFS paths</b>.'},
+{tp:'D',s:[12,13],t:'mc',q:'Who receives the job when you run <code>hadoop jar …</code>?',o:['YARN (the resourcemanager), which schedules it','The datanode directly','The historyserver','Docker'],a:0,w:'"hadoop jar <b>submits the program to YARN</b>."'},
+{tp:'D',s:[12,13],t:'mc',q:'The log shows <code>map 100% reduce 0%</code>. What does that tell you?',o:['All map tasks are done; reduce has not progressed yet','The job failed in the reduce phase','Map and reduce ran at the same time','The job has no reducers'],a:0,w:'Progress is reported per phase: maps finished, reduce at 0%. Next comes <b>map 100% reduce 100%</b> and "completed successfully".'},
+{tp:'D',s:[12,14],t:'mc',q:'A WordCount job runs with 3 reducers. How many part-r-NNNNN files will /output contain?',o:['3','1','2','As many as there are map tasks'],a:0,w:'"<b>Each reducer writes one part-r-NNNNN file.</b>" Three reducers → part-r-00000 to part-r-00002 (plus _SUCCESS).'},
+{tp:'D',s:[12,14],t:'mc',q:'What is the empty <code>_SUCCESS</code> file in /output?',o:['A marker that the job finished successfully','A log of all errors','The input of the next job','A lock that stops other jobs'],a:0,w:'An empty <b>_SUCCESS</b> file <b>marks that the job finished</b>.'},
+{tp:'D',s:[12,15],t:'match',q:'Match each error with its fix.',o:[['docker-compose: command not found','Use docker compose up -d (space, no hyphen)'],['docker: command not found','You are inside the container, type exit first'],['Name node is in safe mode','Wait 30–60 s for the cluster to start, then retry'],['Output directory … already exists','Run hdfs dfs -rm -r /output, then rerun the job'],['No such container: namenode','Run docker ps and start the cluster from the docker-hadoop folder']],w:'These are the five common errors from the troubleshooting slide.'},
+{tp:'D',s:[12,15],t:'mc',q:'You run the WordCount job a second time and get "Output directory already exists". Why?',o:['Hadoop refuses to overwrite an existing output folder; you must delete it first','The input folder is empty','The JAR was copied twice','The cluster is in safe mode'],a:0,w:'Hadoop <b>never overwrites job output</b>. Remove it with <b>hdfs dfs -rm -r /output</b>, then rerun.'},
+{tp:'D',s:[12,16],t:'mc',q:'Which command stops and removes the cluster at the end of the lab?',o:['docker-compose down','docker ps','exit','hdfs dfs -rm -r /'],a:0,w:'"When finished: <b>docker-compose down</b>."'},
+{tp:'D',s:[12,16],t:'mc',q:'True or false: /tmp/test.txt inside the namenode container and /input/test.txt are in the same file system.',o:['True','False'],a:1,w:'/tmp is the <b>container\'s local disk</b>; /input is in <b>HDFS</b>, "a distributed file system, separate from the container\'s own disk".'},
+
+/* ================= LECTURE 13 ================= */
+{tp:'Y',s:[13,2],t:'mc',q:'In the MapReduce overview, what connects the map row to the reduce row?',o:['Intermediate data, shuffled between them','Output data written to HDFS','The input splits','A combine phase'],a:0,w:'Input → Map → <b>intermediate data (shuffled)</b> → Reduce → output.'},
+{tp:'Y',s:[13,3],t:'mc',q:'How is a MapReduce 1 cluster laid out?',o:['JobTracker next to the namenode; a TaskTracker next to each datanode','ResourceManager next to the namenode; NodeManagers on datanodes','One JobTracker per datanode','TaskTrackers on separate machines from the datanodes'],a:0,w:'Slide 3: <b>Namenode + JobTracker</b> on the master, <b>Datanode + TaskTracker</b> on each worker.'},
+{tp:'Y',s:[13,3],t:'mc',q:'Why do TaskTrackers run on the same machines as the datanodes?',o:['So map tasks can read their blocks locally (data locality)','Because TaskTrackers store the blocks','To save on licence costs','So the JobTracker can be removed'],a:0,w:'Putting compute next to storage lets map tasks be scheduled where their <b>block already is</b>.'},
+{tp:'Y',s:[13,4],t:'multi',q:'Select <b>all</b> responsibilities of the MapReduce 1 JobTracker.',o:['Resource management','Scheduling','Monitoring','Job lifecycle','Fault tolerance','Storing the file system namespace'],a:[0,1,2,3,4],w:'The JobTracker did <b>everything</b>: resource management, scheduling, monitoring, job lifecycle and fault tolerance. The namespace belongs to the <b>namenode</b>.'},
+{tp:'Y',s:[13,5],t:'mc',q:'What are the scalability limits of MapReduce 1 given in the lecture?',o:['About 4,000 nodes and 40,000 tasks','About 400 nodes and 4,000 tasks','About 40,000 nodes and 4 million tasks','No limit; it scales linearly'],a:0,w:'Issue 1: <b>&lt; 4,000 nodes</b> and <b>&lt; 40,000 tasks</b>.'},
+{tp:'Y',s:[13,6],t:'mc',q:'Why is the JobTracker a bottleneck?',o:['Every TaskTracker and every job goes through this one process','It has to store all HDFS blocks','It runs on the client','It cannot use more than one CPU'],a:0,w:'Issue 2: <b>one JobTracker</b> for all TaskTrackers and all jobs. As the cluster grows, it becomes the bottleneck.'},
+{tp:'Y',s:[13,7],t:'mc',q:'"Jack of all trades" refers to which problem?',o:['The JobTracker does both scheduling and monitoring','TaskTrackers run both map and reduce tasks','HDFS stores both data and metadata','Clients both read and write'],a:0,w:'Issue 3: one component handles <b>scheduling and monitoring</b>. YARN later separates the two.'},
+{tp:'Y',s:[13,8],t:'mc',q:'In MapReduce 1, what runs inside a TaskTracker?',o:['A fixed number of slots, each running tasks made of function calls','Exactly one task at a time','Containers of any size','HDFS blocks'],a:0,w:'Node, slot, task, function: a <b>TaskTracker</b> has <b>slots</b>; each slot runs <b>tasks</b>; each task makes <b>function calls</b>.'},
+{tp:'Y',s:[13,9],t:'mc',q:'What does "static allocation, fixed size" (issue 4) mean?',o:['Slots are fixed in advance as map or reduce, all with the same resources','Each job gets exactly one slot','Slots grow when tasks need more memory','Tasks can choose their own memory size'],a:0,w:'Slots are <b>preconfigured</b> as map or reduce, and each slot has the <b>same fixed size</b> regardless of what the task needs.'},
+{tp:'Y',s:[13,10],t:'mc',q:'"Not fungible" (issue 5): what does slide 10 show?',o:['Reduce slots sit idle while map slots are busy, and they cannot take map work','Map slots cannot read HDFS','TaskTrackers can be swapped freely','All slots are idle'],a:0,w:'Both reduce slots are marked <b>Idle</b> while map tasks wait. A reduce slot <b>cannot be used</b> for a map task: slots are not interchangeable.'},
+{tp:'Y',s:[13,11],t:'mc',q:'What does YARN stand for?',o:['Yet Another Resource Negotiator','Yahoo Advanced Resource Network','Yet Another Replicated Namenode','Your Application Resource Node'],a:0,w:'<b>Y</b>et <b>A</b>nother <b>R</b>esource <b>N</b>egotiator.'},
+{tp:'Y',s:[13,12],t:'match',q:'Match each YARN component with its role.',o:[['ResourceManager','Cluster-wide master that allocates resources'],['NodeManager','Per-node worker that launches containers'],['Container','A bundle of resources (memory, CPU) on one node'],['Application Master','Per-application manager that requests containers and monitors tasks']],w:'YARN replaces JobTracker/TaskTracker with <b>ResourceManager / NodeManagers</b>, and slots with flexible <b>containers</b>; each app has its own <b>Application Master</b>.'},
+{tp:'Y',s:[13,16],t:'order',q:'Put the steps of running an application on YARN in order.',o:['The client submits the job to the ResourceManager','The ResourceManager allocates a container and starts the Application Master','The Application Master requests more containers from the ResourceManager','The Application Master launches and monitors tasks in those containers'],w:'Slides 13–16: client → RM → <b>AM in a container</b> → AM asks RM for containers → AM works with the containers (execute, monitor).'},
+{tp:'Y',s:[13,14],t:'mc',q:'Where does the Application Master run?',o:['In a container on one of the NodeManagers','Inside the ResourceManager process','On the client machine','On the namenode'],a:0,w:'Slide 14: the RM allocates a <b>container on a NodeManager</b> for the AM; it is not part of the RM.'},
+{tp:'Y',s:[13,15],t:'mc',q:'Who asks the ResourceManager for the containers that run the actual tasks?',o:['The Application Master','The client','The NodeManagers','The namenode'],a:0,w:'The black arrows in slide 15 go from the <b>Application Master</b> to the RM, and then to containers on several NodeManagers.'},
+{tp:'Y',s:[13,16],t:'mc',q:'After getting its containers, what does the Application Master do with them?',o:['Executes tasks in them and monitors them','Returns them immediately to the RM','Stores HDFS blocks in them','Forwards them to the client'],a:0,w:'Slide 16: the AM communicates with its containers to <b>execute</b> and <b>monitor</b> the work.'},
+{tp:'Y',s:[13,17],t:'multi',q:'Which resources can already be requested in a YARN container request (not "work in progress")?',o:['Memory','CPU','Disk','Network'],a:[0,1],w:'Fine-grained requests cover <b>memory and CPU</b>; disk and network are marked <b>work in progress</b>.'},
+{tp:'Y',s:[13,17],t:'mc',q:'How do YARN containers fix the "fixed size" problem of slots?',o:['Each request states how much memory and CPU it needs','All containers are made twice as big as slots','Containers are always one full node','Containers are reserved per job type'],a:0,w:'Requests are <b>fine-grained</b>: a container is sized to the task, instead of all slots being identical.'},
+{tp:'Y',s:[13,18],t:'mc',q:'How does YARN split the old JobTracker duties?',o:['ResourceManager: scheduling and application management · Application Masters: monitoring','ResourceManager: monitoring · Application Masters: scheduling','NodeManagers: scheduling · ResourceManager: monitoring','Everything stays in the ResourceManager'],a:0,w:'Slide 18: <b>scheduling and application management</b> in the Resource Manager, <b>monitoring</b> in the (many) Application Masters.'},
+{tp:'Y',s:[13,19],t:'mc',q:'How does the ResourceManager know which NodeManagers are alive?',o:['NodeManagers send liveliness heartbeats to the Resource Tracker; a Nodes List Manager marks nodes valid or invalid','The client reports dead nodes','Application Masters ping every node','HDFS tells the ResourceManager'],a:0,w:'Slide 19: the <b>Resource Tracker</b> receives <b>liveliness</b> messages; the <b>Nodes List Manager</b> keeps the list of <b>valid / invalid</b> nodes.'},
+{tp:'Y',s:[13,20],t:'mc',q:'True or false: if a map task fails, the ResourceManager restarts it.',o:['True','False'],a:1,w:'The RM is a <b>pure scheduler</b>: it does <b>not</b> monitor tasks and does <b>not</b> restart them. That is the Application Master\'s job.'},
+{tp:'Y',s:[13,21],t:'mc',q:'"The Application Master is application-specific." What does this mean?',o:['Each framework (e.g. MapReduce, Spark) brings its own Application Master logic','There is one Application Master for the whole cluster','The Application Master is chosen by HDFS','Applications cannot have masters'],a:0,w:'Each application/framework has its <b>own AM</b> (the crowns of different sizes), so YARN can host very different frameworks.'},
+{tp:'Y',s:[13,22],t:'mc',q:'A container running a task crashes. Who handles it?',o:['The Application Master notices it and relaunches the task','The ResourceManager restarts it automatically','The client must resubmit the whole job','The NodeManager reruns the whole application'],a:0,w:'"Fault tolerance is on the Application Master": it <b>monitors</b> its containers and <b>relaunches</b> failed work.'},
+{tp:'Y',s:[13,23],t:'mc',q:'Under the FIFO scheduler, App 4 is submitted while the long App 3 is running. What happens?',o:['App 4 waits until all earlier applications are finished','App 4 gets half of the cluster immediately','App 4 pre-empts App 3','App 4 runs in its own queue'],a:0,w:'<b>FIFO</b>: applications run in arrival order. A short job can be stuck behind a long one.'},
+{tp:'Y',s:[13,24],t:'mc',q:'Capacity scheduler: Math gets 40% of the cluster, and Algebra gets 80% of Math. What share of the whole cluster does Algebra get?',o:['32%','80%','40%','8%'],a:0,w:'Hierarchical queues multiply: 40% × 80% = <b>32%</b> (Analysis gets 40% × 20% = 8%).',pv:'<div style="font:13px sans-serif;line-height:1.7">Root<br>├ Math 40% → Analysis 20% = <b>8%</b>, Algebra 80% = <b>32%</b><br>├ Physics 10% = <b>10%</b><br>└ CS 50% → TI 20% = <b>10%</b>, DB 80% = <b>40%</b></div>'},
+{tp:'Y',s:[13,24],t:'mc',q:'In the same queue tree, CS gets 50% and TI gets 20% of CS. What is TI\'s share of the cluster?',o:['10%','20%','50%','70%'],a:0,w:'50% × 20% = <b>10%</b>. All leaf shares add up to 100%: 8 + 32 + 10 + 10 + 40.'},
+{tp:'Y',s:[13,25],t:'mc',q:'How does the capacity scheduler share the cluster?',o:['Several queues each get a guaranteed capacity; inside a queue jobs run FIFO','All jobs share one FIFO queue','Every job gets an equal share at every moment','Jobs are ordered by size, smallest first'],a:0,w:'Slide 25: Queue 1 (FIFO) and Queue 2 (FIFO) run <b>side by side</b>, each with its own capacity.'},
+{tp:'Y',s:[13,26],t:'mc',q:'What is the goal of the fair scheduler?',o:['Divide resources dynamically so running applications get roughly equal shares','Run applications strictly in arrival order','Give every queue a fixed percentage that never changes','Always give all resources to the largest application'],a:0,w:'The fair scheduler <b>rebalances over time</b> so that all running applications (or users) receive a <b>fair, roughly equal share</b>.'},
+{tp:'Y',s:[13,27],t:'mc',q:'Cluster: 1 TB memory, 100 cores. Alice\'s containers need 30 GB and 2 cores; Bob\'s need 10 GB and 6 cores. What are their dominant resources?',o:['Alice: memory (3%) · Bob: CPU (6%)','Alice: CPU (2%) · Bob: memory (1%)','Both: memory','Both: CPU'],a:0,w:'Alice: 30 GB = 3% of memory vs 2 cores = 2% of CPU → <b>memory</b>. Bob: 10 GB = 1% vs 6 cores = 6% → <b>CPU</b>.'},
+{tp:'Y',s:[13,28],t:'mc',q:'Dominant Resource Fairness gives Alice and Bob equal dominant shares. How many containers does each get?',o:['Alice 20, Bob 10','Alice 10, Bob 20','Alice 15, Bob 15','Alice 33, Bob 16'],a:0,w:'Equal dominant shares: 3%·x = 6%·y → x = 2y. CPU: 2x + 6y = 10y ≤ 100 → y = 10, x = 20. Result: Alice 60% mem / 40% CPU, Bob 10% mem / 60% CPU.',pv:'<table style="border-collapse:collapse;font:13px sans-serif"><tr style="background:#eee"><th style="padding:4px 10px">User</th><th style="padding:4px 10px">Containers</th><th style="padding:4px 10px">Memory</th><th style="padding:4px 10px">CPU</th></tr><tr><td style="padding:4px 10px">Alice</td><td style="padding:4px 10px">20</td><td style="padding:4px 10px"><b>60%</b></td><td style="padding:4px 10px">40%</td></tr><tr><td style="padding:4px 10px">Bob</td><td style="padding:4px 10px">10</td><td style="padding:4px 10px">10%</td><td style="padding:4px 10px"><b>60%</b></td></tr></table>'},
+{tp:'Y',s:[13,28],t:'mc',q:'In the DRF example, why can no more containers be handed out after Alice 20 / Bob 10?',o:['All 100 cores are used: 20 × 2 + 10 × 6 = 100','All 1 TB of memory is used','Each user is limited to 20 containers','The ResourceManager stops at 30 containers'],a:0,w:'CPU is exhausted (<b>40 + 60 = 100 cores</b>); memory is only at 70%.'},
+{tp:'Y',s:[13,28],t:'mc',q:'In the final DRF allocation, what are Alice\'s and Bob\'s dominant shares?',o:['Both 60%','Alice 40%, Bob 60%','Alice 60%, Bob 10%','Both 50%'],a:0,w:'Alice\'s dominant (memory) = <b>60%</b>, Bob\'s dominant (CPU) = <b>60%</b>. DRF equalises dominant shares, not containers.'},
+{tp:'Y',s:[13,29],t:'multi',q:'Select <b>all</b> kinds of frameworks the lecture shows running on YARN.',o:['MapReduce','DAG distributed processing','Message Passing Interface (MPI)','Graph processing','HDFS block storage'],a:[0,1,2,3],w:'Because AMs are application-specific, YARN hosts <b>MapReduce, DAG engines, MPI and graph processing</b>. HDFS is storage, not a YARN application.'},
+{tp:'Y',s:[13,30],t:'multi',q:'Select <b>all</b> benefits listed in the YARN summary.',o:['Separation between scheduling and monitoring','Scalability','Availability','Multi-tenancy','Static map and reduce slots'],a:[0,1,2,3],w:'Summary: <b>separation of scheduling and monitoring, scalability, availability, multi-tenancy</b>. Static slots were the MapReduce 1 problem YARN removed.'}
+];
+QS.forEach(function(q){q.s=q.s[0]+' · slide '+q.s[1];});
+
+/*__DATA_END__*/
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const TYPE={mc:'Choose one',multi:'Select all that apply',order:'Put in order',match:'Match the pairs'};
+let sel=new Set(Object.keys(TOPICS)),list=[],cur=0;
+
+$('#heroMeta').innerHTML=`<span>${QS.length} questions</span><span>${Object.keys(TOPICS).length} topics</span><span>Lectures 8–13</span><span>${new Set(QS.map(q=>q.t)).size} question types</span>`;
+function chips(){
+  const c=$('#chips');c.innerHTML='';
+  const all=document.createElement('button');all.className='chip'+(sel.size===Object.keys(TOPICS).length?' on':'');all.innerHTML=`All <small>${QS.length}</small>`;
+  all.onclick=()=>{sel=new Set(Object.keys(TOPICS));chips();};c.appendChild(all);
+  for(const k in TOPICS){const b=document.createElement('button');const n=QS.filter(q=>q.tp===k).length;
+    b.className='chip'+(sel.has(k)&&sel.size!==Object.keys(TOPICS).length?' on':'');b.innerHTML=`${TOPICS[k].n} <small>${n}</small>`;
+    b.onclick=()=>{if(sel.size===Object.keys(TOPICS).length)sel=new Set([k]);else if(sel.has(k)){sel.delete(k);if(!sel.size)sel=new Set(Object.keys(TOPICS));}else sel.add(k);chips();};c.appendChild(b);}
+  $('#startBtn').textContent=`Start quiz (${QS.filter(q=>sel.has(q.tp)).length} questions) →`;
+}
+chips();
+
+function prep(q){
+  const it={q,done:false,ok:false,resp:null};
+  if(q.t==='mc'||q.t==='multi'){const idx=q.o.map((_,i)=>i);it.perm=$('#shuffleOpts').checked&&!(q.o.length===2&&/True|False|Yes|No/.test(q.o[0]))?shuf(idx):idx;it.pick=new Set();}
+  if(q.t==='order'){let p;do{p=shuf(q.o.map((_,i)=>i));}while(p.every((v,i)=>v===i));it.ord=p;}
+  if(q.t==='match'){it.rights=shuf([...new Set(q.o.map(p=>p[1]))]);it.pick=q.o.map(()=> '');}
+  return it;
+}
+function start(qs){
+  list=qs.map(prep);cur=0;
+  $('#results').style.display='none';$('#quizArea').style.display='block';render();
+  $('#quizArea').scrollIntoView({behavior:'smooth',block:'start'});
+}
+$('#startBtn').onclick=()=>{let qs=QS.filter(q=>sel.has(q.tp));if($('#shuffle').checked)qs=shuf(qs);start(qs);};
+
+function stats(){
+  const d=list.filter(x=>x.done).length,o=list.filter(x=>x.ok).length,n=list.length;
+  $('#prog').innerHTML=`<i class="ok" style="width:${o/n*100}%"></i><i class="bad" style="width:${(d-o)/n*100}%"></i>`;
+  $('#stA').textContent=`Question ${cur+1} of ${n}`;
+  $('#stB').textContent=`${o} correct · ${d-o} wrong · ${n-d} left`;
+  const m=$('#map');m.innerHTML='';
+  list.forEach((x,i)=>{const b=document.createElement('button');b.textContent=i+1;b.className=(x.done?(x.ok?'ok':'bad'):'')+(i===cur?' cur':'');b.onclick=()=>{cur=i;render();};m.appendChild(b);});
+}
+function render(){
+  const it=list[cur],q=it.q,T=TOPICS[q.tp];
+  const c=$('#card');
+  c.innerHTML=`<div class="qmeta"><span class="ttag" style="background:${T.c}">${T.n}</span><span class="qnum">${META.refLabel} ${q.s}</span></div>
+   <div class="qtype">${TYPE[q.t]}</div><div class="qtext">${q.q}</div>${q.code?`<pre class="code">${esc(q.code)}</pre>`:''}
+   <div id="ans"></div><div class="fb" id="fb"></div>
+   <div class="actions"><button class="btn ghost" id="prev">← Previous</button><div style="display:flex;gap:8px"><button class="btn" id="check">Check</button><button class="btn" id="next">Next →</button></div></div>`;
+  const A=$('#ans');
+  if(q.t==='mc'||q.t==='multi'){
+    const box=document.createElement('div');box.className='opts';
+    it.perm.forEach((oi,k)=>{const b=document.createElement('button');b.className='opt';b.dataset.oi=oi;b.innerHTML=`<span class="k">${k+1}</span><span>${q.o[oi]}</span>`;
+      b.onclick=()=>{if(it.done)return;if(q.t==='mc'){it.pick=new Set([oi]);check();}else{it.pick.has(oi)?it.pick.delete(oi):it.pick.add(oi);b.classList.toggle('sel');}};box.appendChild(b);});
+    A.appendChild(box);
+  }else if(q.t==='order'){
+    const box=document.createElement('div');box.className='ord';A.appendChild(box);
+    const draw=()=>{box.innerHTML='';it.ord.forEach((oi,k)=>{const r=document.createElement('div');r.className='ord-item'+(it.done?(oi===k?' right':' wrong'):'');
+      r.innerHTML=`<span class="n">${k+1}</span><span class="tx">${q.o[oi]}</span><button ${it.done||k===0?'disabled':''}>↑</button><button ${it.done||k===it.ord.length-1?'disabled':''}>↓</button>`;
+      const [u,d]=r.querySelectorAll('button');u.onclick=()=>{[it.ord[k-1],it.ord[k]]=[it.ord[k],it.ord[k-1]];draw();};d.onclick=()=>{[it.ord[k+1],it.ord[k]]=[it.ord[k],it.ord[k+1]];draw();};box.appendChild(r);});};
+    it.draw=draw;draw();
+  }else if(q.t==='match'){
+    const box=document.createElement('div');box.className='match';A.appendChild(box);
+    q.o.forEach((p,i)=>{const r=document.createElement('div');r.className='mrow';
+      r.innerHTML=`<div><b>${p[0]}</b></div><select><option value="">— choose —</option>${it.rights.map(x=>`<option ${it.pick[i]===x?'selected':''}>${x}</option>`).join('')}</select>`;
+      r.querySelector('select').onchange=e=>{it.pick[i]=e.target.value;};box.appendChild(r);});
+  }
+  $('#prev').disabled=cur===0;
+  $('#prev').onclick=()=>{cur--;render();};
+  $('#next').onclick=()=>{if(cur<list.length-1){cur++;render();}else finish();};
+  $('#next').textContent=cur<list.length-1?'Next →':'See results →';
+  $('#check').onclick=check;
+  $('#check').style.display=(q.t==='mc'||it.done)?'none':'';
+  if(it.done)showResult();
+  stats();
+}
+function check(){
+  const it=list[cur],q=it.q;if(it.done)return;
+  if(q.t==='multi'&&!it.pick.size)return flash('Select at least one option.');
+  if(q.t==='match'&&it.pick.some(x=>!x))return flash('Choose a match for every row.');
+  if(q.t==='mc')it.ok=[...it.pick][0]===q.a;
+  if(q.t==='multi')it.ok=it.pick.size===q.a.length&&q.a.every(x=>it.pick.has(x));
+  if(q.t==='order')it.ok=it.ord.every((v,i)=>v===i);
+  if(q.t==='match')it.ok=q.o.every((p,i)=>it.pick[i].trim()===p[1].trim());
+  it.done=true;render();
+}
+function flash(m){const f=$('#fb');f.className='fb show no';f.innerHTML=m;}
+function showResult(){
+  const it=list[cur],q=it.q;
+  if(q.t==='mc'||q.t==='multi'){
+    const ans=q.t==='mc'?[q.a]:q.a;
+    document.querySelectorAll('.opt').forEach(b=>{const oi=+b.dataset.oi;b.disabled=true;
+      if(ans.includes(oi))b.classList.add('right');else if(it.pick.has(oi))b.classList.add('wrong');});
+  }
+  if(q.t==='match'){
+    document.querySelectorAll('.mrow').forEach((r,i)=>{const ok=it.pick[i].trim()===q.o[i][1].trim();r.classList.add(ok?'right':'wrong');r.querySelector('select').disabled=true;
+      if(!ok)r.insertAdjacentHTML('beforeend',`<div class="fix">Correct: ${q.o[i][1]}</div>`);});
+  }
+  let extra='';
+  if(q.t==='order'&&!it.ok)extra=`<br><b>Correct order:</b> ${q.o.map((x,i)=>`${i+1}. ${x}`).join(' → ')}`;
+  const f=$('#fb');f.className='fb show '+(it.ok?'ok':'no');
+  f.innerHTML=(it.ok?'✅ <b>Correct.</b> ':'❌ <b>Not quite.</b> ')+q.w+extra+`<span class="src">Source: ${META.refLabel.toLowerCase()} ${q.s} · ${TOPICS[q.tp].n}</span>`+(q.pv?`<div class="pv"><div class="pv-l">Live preview</div>${q.pv}</div>`:'');
+}
+function finish(){
+  const n=list.length,o=list.filter(x=>x.ok).length,d=list.filter(x=>x.done).length;
+  const r=$('#results');r.style.display='block';
+  let rows='';
+  for(const k in TOPICS){const qs=list.filter(x=>x.q.tp===k);if(!qs.length)continue;const ok=qs.filter(x=>x.ok).length,p=ok/qs.length*100;
+    rows+=`<div class="tbar"><span>${TOPICS[k].n}</span><div class="bar"><i style="width:${p}%;background:${p>=80?'#2f8a5e':p>=50?'#c9962f':'#c0503a'}"></i></div><span class="v">${ok}/${qs.length}</span></div>`;}
+  const pct=Math.round(o/n*100);
+  const wrong=list.filter(x=>x.done&&!x.ok).length+list.filter(x=>!x.done).length;
+  r.innerHTML=`<h2>Results</h2><div class="big">${pct}%</div><p>${o} of ${n} correct${d<n?` · ${n-d} unanswered (counted as not correct)`:''}.</p>
+    <p style="font-weight:600;margin-top:18px">By topic</p>${rows}
+    <p style="margin-top:14px;color:var(--ink-soft);font-size:.92rem">${pct>=90?META.readyMsg:pct>=70?'Solid. Retry the wrong ones and re-read the weaker topics above.':'Review the weaker topics in the study guide, then retry the wrong ones.'}</p>
+    <div class="actions"><button class="btn ghost" id="restart">↺ Restart all</button>${wrong?`<button class="btn" id="retryWrong">Retry ${wrong} wrong / skipped →</button>`:''}</div>`;
+  $('#restart').onclick=()=>{let qs=list.map(x=>x.q);if($('#shuffle').checked)qs=shuf(qs);start(qs);};
+  if(wrong)$('#retryWrong').onclick=()=>start(list.filter(x=>!x.ok).map(x=>x.q));
+  r.scrollIntoView({behavior:'smooth'});
+}
+document.addEventListener('keydown',e=>{
+  if($('#quizArea').style.display==='none'||e.target.tagName==='SELECT')return;
+  const it=list[cur];if(!it)return;
+  if(/^[1-9]$/.test(e.key)){const b=document.querySelectorAll('.opt')[+e.key-1];if(b)b.click();}
+  else if(e.key==='Enter'){e.preventDefault();it.done?$('#next').click():check();}
+  else if(e.key==='ArrowRight'&&cur<list.length-1){cur++;render();}
+  else if(e.key==='ArrowLeft'&&cur>0){cur--;render();}
+});
+})();
+</script>
+</body>
+</html>
