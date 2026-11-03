@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Big Data Midterm — Open-Ended Practice Q&amp;A</title>
+<style>
+  :root{
+    --bg:#faf8f4; --card:#ffffff; --ink:#1f1d1a; --muted:#6b665e; --line:#e6e1d8;
+    --accent:#8a4b2d; --accent-soft:#f6ece6; --star:#b7791f; --code:#f3f0ea;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  header{max-width:880px;margin:0 auto;padding:48px 24px 8px}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:2rem;line-height:1.2;margin:0 0 8px}
+  .sub{color:var(--muted);margin:0 0 20px}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .toolbar button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 14px;border-radius:8px;font:inherit;font-size:.9rem;cursor:pointer}
+  .toolbar button:hover{border-color:var(--accent);color:var(--accent)}
+  nav{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0}
+  nav a{font-size:.85rem;text-decoration:none;color:var(--accent);background:var(--accent-soft);padding:4px 10px;border-radius:999px}
+  main{max-width:880px;margin:0 auto;padding:8px 24px 64px}
+  section{margin-top:36px}
+  h2{font-family:Georgia,serif;font-size:1.35rem;margin:0 0 4px;padding-bottom:6px;border-bottom:2px solid var(--accent)}
+  .lec{color:var(--muted);font-size:.85rem;margin:0 0 14px}
+  details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}
+  details[open]{box-shadow:0 1px 6px rgba(0,0,0,.05)}
+  summary{list-style:none;cursor:pointer;padding:14px 18px 14px 56px;position:relative;font-weight:600}
+  summary::-webkit-details-marker{display:none}
+  summary .n{position:absolute;left:16px;top:13px;width:28px;height:28px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-size:.8rem;display:grid;place-items:center}
+  summary .star{color:var(--star);font-weight:700;margin-right:4px}
+  summary::after{content:"Show answer";position:absolute;right:16px;top:15px;font-size:.75rem;font-weight:500;color:var(--muted)}
+  details[open] summary::after{content:"Hide"}
+  summary{padding-right:110px}
+  .ans{padding:4px 22px 18px 56px;border-top:1px dashed var(--line)}
+  .ans p{margin:10px 0}
+  .ans ul,.ans ol{margin:8px 0;padding-left:22px}
+  .ans li{margin:4px 0}
+  table{border-collapse:collapse;width:100%;margin:10px 0;font-size:.92rem}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+  th{background:var(--accent-soft)}
+  pre{background:var(--code);border-radius:8px;padding:12px 14px;overflow-x:auto;font:13.5px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;margin:10px 0}
+  code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:.9em}
+  pre code{background:none;padding:0}
+  .tip{background:#fff8e6;border-left:3px solid var(--star);padding:8px 12px;border-radius:6px;font-size:.93rem}
+  .legend{font-size:.9rem;color:var(--muted)}
+  @media print{
+    body{background:#fff}
+    .toolbar,nav,summary::after{display:none !important}
+    details{border:none;box-shadow:none;page-break-inside:avoid}
+    .ans{display:block;border-top:none}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Big Data Midterm — Open-Ended Practice Q&amp;A</h1>
+  <p class="sub">33 likely open-ended questions with model answers, grouped by lecture block. Try each one yourself before you open the answer.</p>
+  <p class="legend"><span style="color:var(--star);font-weight:700">★</span> matches a question pattern from a past midterm or quiz. These are model answers, not an official key.</p>
+  <div class="toolbar">
+    <button onclick="toggleAll(true)">Expand all answers</button>
+    <button onclick="toggleAll(false)">Collapse all</button>
+    <button onclick="window.print()">Print / save as PDF</button>
+  </div>
+  <nav>
+    <a href="#concepts">Concepts (1–10)</a>
+    <a href="#hdfs">HDFS (11–17)</a>
+    <a href="#mapreduce">MapReduce (18–24)</a>
+    <a href="#yarn">YARN (25–28)</a>
+    <a href="#hbase">HBase (29–33)</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ CONCEPTS ============ -->
+<section id="concepts">
+<h2>Big data &amp; data science concepts</h2>
+<p class="lec">Lectures 1–3</p>
+
+<details><summary><span class="n">1</span>Explain the 5 V's of Big Data. For each V, describe what it represents and give an example.</summary>
+<div class="ans">
+<table>
+<tr><th>V</th><th>What it represents</th><th>Example</th></tr>
+<tr><td>Volume</td><td>The sheer amount of data, from terabytes to petabytes and beyond.</td><td>A bank storing 5 PB of transaction history.</td></tr>
+<tr><td>Velocity</td><td>How fast data is generated and must be processed, often in real time.</td><td>100,000 card transactions per second checked for fraud.</td></tr>
+<tr><td>Variety</td><td>Different formats: structured, semi-structured and unstructured.</td><td>SQL tables + JSON logs + images + sensor readings.</td></tr>
+<tr><td>Veracity</td><td>How trustworthy the data is: quality, accuracy, uncertainty.</td><td>Duplicate or mistyped customer records; faulty sensor values.</td></tr>
+<tr><td>Value</td><td>The business worth that comes from analysing the data. This is the point of the other four.</td><td>A recommendation engine that raises basket size by 10%.</td></tr>
+</table>
+<p class="tip">Trap from the past midterm: Value is <b>not</b> storage capacity, and Velocity does <b>not</b> mean data is produced slowly.</p>
+</div></details>
+
+<details><summary><span class="n">2</span>Explain the difference between capacity, throughput and latency. Give an example of each.</summary>
+<div class="ans">
+<ul>
+<li><b>Capacity</b> is how much data a system can store. <i>Example:</i> a storage cluster holds 500 TB.</li>
+<li><b>Throughput</b> is the rate at which data moves through or is processed by the system, per unit of time. <i>Example:</i> the cluster reads 2 GB/s.</li>
+<li><b>Latency</b> is the delay between a request and the first result. <i>Example:</i> a query takes 50 ms before the first row comes back.</li>
+</ul>
+<p>Capacity has grown much faster than throughput, and throughput much faster than latency has improved. A single machine can no longer read all its data in reasonable time, which is why we split data and read it in parallel across many machines.</p>
+</div></details>
+
+<details><summary><span class="n">3</span><span class="star">★</span>What does it mean that Hadoop is scale-out rather than scale-up? Give one example of each and explain how scale-out improves scalability and reliability.</summary>
+<div class="ans">
+<p><b>Scale-up (vertical):</b> make one machine more powerful. <i>Example:</i> upgrade a database server from 64 GB to 512 GB of RAM and a faster CPU.</p>
+<p><b>Scale-out (horizontal):</b> add more ordinary (commodity) machines to a cluster. <i>Example:</i> grow a Hadoop cluster from 10 to 20 DataNodes.</p>
+<p><b>Scalability:</b> capacity and processing power grow almost linearly as nodes are added. There is no hardware ceiling of a single machine, and commodity nodes are much cheaper than high-end servers. Work is split into tasks that run in parallel (shared-nothing architecture).</p>
+<p><b>Reliability:</b> no single worker is critical. HDFS replicates each block (default 3 copies) on different nodes, and failed tasks are re-run on other nodes. One machine failing, which is common at cluster scale, does not stop the system. With scale-up, the one big server is a single point of failure.</p>
+</div></details>
+
+<details><summary><span class="n">4</span><span class="star">★</span>Explain how Big Data Analytics helps organisations extract insights and improve business outcomes. Give one industry example.</summary>
+<div class="ans">
+<p>Big Data Analytics collects large, fast and varied data, processes it on distributed systems, and applies statistics and machine learning to it. The goal is to move from raw data to information, knowledge and decisions (the DIKW pyramid). It supports all four kinds of analytics: what happened, why, what will happen, and what to do.</p>
+<p>Business outcomes:</p>
+<ul>
+<li><b>Grow revenue:</b> personalisation, recommendations, dynamic pricing.</li>
+<li><b>Cut costs:</b> forecasting, automation, predictive maintenance.</li>
+<li><b>Reduce risk:</b> fraud detection, credit scoring.</li>
+<li><b>Better decisions:</b> evidence and experiments replace gut feeling.</li>
+</ul>
+<p><b>Example (banking):</b> every card transaction is scored in real time by a model trained on historical fraud patterns. Suspicious transactions are blocked instantly, which reduces fraud losses and protects customers.</p>
+</div></details>
+
+<details><summary><span class="n">5</span>Explain the four types of analytics. For each, give the question it answers and an example.</summary>
+<div class="ans">
+<table>
+<tr><th>Type</th><th>Question</th><th>Typical tools</th><th>Example</th></tr>
+<tr><td>Descriptive</td><td>What happened?</td><td>Reports, dashboards</td><td>Monthly sales dashboard.</td></tr>
+<tr><td>Diagnostic</td><td>Why did it happen?</td><td>Drill-down, correlation</td><td>Why did churn jump last quarter? A price increase in one region.</td></tr>
+<tr><td>Predictive</td><td>What will happen?</td><td>Forecasting, ML models</td><td>A bank predicts which loan applicants will default.</td></tr>
+<tr><td>Prescriptive</td><td>What should we do?</td><td>Optimisation, decision models</td><td>Recommend the best retention offer for each at-risk customer.</td></tr>
+</table>
+<p>Value and difficulty both increase from descriptive to prescriptive.</p>
+</div></details>
+
+<details><summary><span class="n">6</span>Compare the roles of Data Analyst, Data Scientist, Data Engineer and ML Engineer.</summary>
+<div class="ans">
+<table>
+<tr><th>Role</th><th>Main focus</th><th>Example task</th><th>Key tools</th></tr>
+<tr><td>Data Analyst</td><td>Explain the past with data</td><td>Build a dashboard on why churn rose</td><td>SQL, Excel, BI tools</td></tr>
+<tr><td>Data Scientist</td><td>Predict and explain with models</td><td>Build a churn-prediction model</td><td>Python/R, ML, statistics</td></tr>
+<tr><td>Data Engineer</td><td>Build reliable pipelines and ensure data quality</td><td>Fix broken pipelines so dashboard numbers reconcile</td><td>SQL, Spark, cloud, Airflow</td></tr>
+<tr><td>ML Engineer</td><td>Put models into production at scale</td><td>Deploy the recommendation model as a real-time API</td><td>Python, MLOps, cloud</td></tr>
+</table>
+<p>The engineer works upstream and makes data usable. The scientist works downstream and makes it valuable. The ML engineer ships what the scientist prototypes.</p>
+</div></details>
+
+<details><summary><span class="n">7</span>Explain the difference between ETL and ELT. When would you choose each?</summary>
+<div class="ans">
+<ul>
+<li><b>ETL (Extract → Transform → Load):</b> data is cleaned and shaped <i>before</i> it lands in the warehouse. Choose it for classic on-premise warehouses, fixed schemas, expensive storage, or when sensitive data must be filtered before loading.</li>
+<li><b>ELT (Extract → Load → Transform):</b> raw data is loaded first and transformed <i>inside</i> the warehouse when needed. Choose it for modern cloud platforms (Snowflake, BigQuery) with cheap storage and elastic compute, and when you want flexibility to re-transform raw data later.</li>
+</ul>
+<p>ETL needs more upfront engineering and is less flexible. ELT is more scalable and is today's default.</p>
+</div></details>
+
+<details><summary><span class="n">8</span><span class="star">★</span>Given a dataset of users, time spent and purchases, propose a data-driven and a non-data-driven decision, and explain why the first is data-driven.</summary>
+<div class="ans">
+<p>Using the past exam data (product A, 30% discount): User 1 spent 5 min (no purchase), User 2 spent 2 min (bought), User 3 spent 7 min (no), User 4 spent 5 s (no), User 5 spent 4 min (bought).</p>
+<ul>
+<li><b>Data-driven:</b> send the discount only to <b>User 1 and User 3</b>. They showed strong interest (long time spent) but did not buy, so price is the likely barrier. Skip Users 2 and 5 (already bought) and User 4 (5 seconds, no interest).</li>
+<li><b>Non-data-driven:</b> send the discount to everyone, to random users, or to whoever the manager picks by intuition.</li>
+<li><b>Why it is data-driven:</b> the decision is based on observed behaviour (engagement + outcome) rather than guesswork. It targets the users most likely to change their behaviour, avoids wasting discounts on people who would buy anyway, and the result can be measured (conversion rate of the targeted group).</li>
+</ul>
+</div></details>
+
+<details><summary><span class="n">9</span>Describe the stages of the data science lifecycle. Why is it iterative?</summary>
+<div class="ans">
+<ol>
+<li><b>Business understanding:</b> define the problem and goal.</li>
+<li><b>Data understanding:</b> collect and explore available data.</li>
+<li><b>Data preparation:</b> clean, transform and build features. This is usually most of the effort.</li>
+<li><b>Modeling:</b> train statistical or ML models.</li>
+<li><b>Evaluation:</b> check the model against business and model metrics on unseen data.</li>
+<li><b>Deployment:</b> put it into use, then monitor it.</li>
+</ol>
+<p><b>Why iterative:</b> findings at any stage send you back. Poor data quality sends you back to preparation, a weak model back to features, and a changed business need back to step 1. Frameworks such as CRISP-DM formalise this loop.</p>
+</div></details>
+
+<details><summary><span class="n">10</span><span class="star">★</span>Explain the standard use-case parameters. For each, describe what it represents and give an example (fraud detection).</summary>
+<div class="ans">
+<table>
+<tr><th>#</th><th>Parameter</th><th>What it represents</th><th>Example: card fraud detection</th></tr>
+<tr><td>1</td><td>Business objective</td><td>The problem and the decision or outcome it improves</td><td>Reduce fraud losses on card payments</td></tr>
+<tr><td>2</td><td>Stakeholders &amp; users</td><td>Who owns it, uses the output, is affected</td><td>Fraud/risk team owns; customers affected</td></tr>
+<tr><td>3</td><td>Data sources</td><td>What data, where it lives, its quality</td><td>Transaction logs, device data, merchant info, past fraud labels</td></tr>
+<tr><td>4</td><td>Analytical approach</td><td>Problem type and method</td><td>Binary classification + anomaly detection</td></tr>
+<tr><td>5</td><td>Success metrics (KPIs)</td><td>Business + model metrics that define "good"</td><td>Recall on fraud, false-positive rate, € losses avoided</td></tr>
+<tr><td>6</td><td>Baseline &amp; target</td><td>Current performance and the goal</td><td>Losses 0.10% of volume → 0.05%</td></tr>
+<tr><td>7</td><td>Cadence &amp; latency</td><td>Batch or real time; how often it runs</td><td>Real time, under 100 ms per transaction</td></tr>
+<tr><td>8</td><td>Deployment &amp; action</td><td>How output is delivered and acted on</td><td>Block high-risk payments, send SMS check for medium risk</td></tr>
+<tr><td>9</td><td>Risks &amp; constraints</td><td>Privacy, fairness, cost, regulation, feasibility</td><td>GDPR, false declines annoying customers, model drift</td></tr>
+</table>
+<p class="tip">Your quiz answer lost marks for listing only 6 parameters with no examples. Learn all 9, and give an example for each.</p>
+</div></details>
+</section>
+
+<!-- ============ HDFS ============ -->
+<section id="hdfs">
+<h2>HDFS</h2>
+<p class="lec">Lectures 4–5</p>
+
+<details><summary><span class="n">11</span><span class="star">★</span>Explain how HDFS achieves fault tolerance. What happens when a DataNode fails?</summary>
+<div class="ans">
+<p><b>Replication:</b> each file is split into blocks (128 MB), and each block is stored on several DataNodes (default replication factor 3). With rack awareness, one copy goes on the local rack and two on a different rack, so even a rack failure loses no data.</p>
+<p><b>When a DataNode fails:</b></p>
+<ol>
+<li>DataNodes send a <b>heartbeat</b> to the NameNode every 3 seconds. When heartbeats stop (after about 10 minutes), the NameNode marks the node dead.</li>
+<li>From <b>block reports</b>, the NameNode knows which blocks that node held, and that they are now under-replicated.</li>
+<li>It tells DataNodes holding the surviving copies to <b>re-replicate</b> those blocks to other nodes until the replication factor is restored.</li>
+<li>Clients reading the file are sent to another replica, so reads keep working.</li>
+</ol>
+<p>Checksums also detect corrupted blocks, which are then replaced from a healthy copy.</p>
+</div></details>
+
+<details><summary><span class="n">12</span><span class="star">★</span>Explain the process of checkpointing and its purpose. What are the fsimage and the edit log?</summary>
+<div class="ans">
+<ul>
+<li><b>fsimage:</b> a snapshot of the entire filesystem namespace (directories, files, block mapping) saved on disk.</li>
+<li><b>Edit log:</b> a journal of every change (create, delete, rename) made since the last fsimage.</li>
+</ul>
+<p>The NameNode keeps the namespace in memory and writes each change to the edit log. Over time the edit log grows very large.</p>
+<p><b>Checkpointing</b> merges the edit log into the fsimage:</p>
+<ol>
+<li>The Secondary NameNode (or the Standby NameNode in HA setups) fetches the current fsimage and edit log.</li>
+<li>It loads the fsimage into memory and replays the edits.</li>
+<li>It writes a new, up-to-date fsimage and sends it back to the NameNode.</li>
+<li>The NameNode starts a fresh, empty edit log.</li>
+</ol>
+<p>This happens by default every hour or every 1 million transactions.</p>
+<p><b>Purpose:</b> keep the edit log small, make NameNode restarts fast (otherwise it would replay a huge log), and limit metadata loss.</p>
+<p class="tip">The Secondary NameNode is <b>not</b> a hot backup. It only does checkpoints.</p>
+</div></details>
+
+<details><summary><span class="n">13</span>Describe the roles of the NameNode and the DataNode. Why is the NameNode a single point of failure, and how is it mitigated?</summary>
+<div class="ans">
+<p><b>NameNode (master):</b> stores only metadata, in memory: the namespace (file and directory tree), file → blocks mapping, and block → DataNodes locations. It handles opens, closes and renames, decides where replicas go, and monitors DataNodes. It never stores or forwards file data.</p>
+<p><b>DataNode (worker):</b> stores the actual blocks on its local disks, serves reads and writes directly to clients, sends heartbeats and block reports to the NameNode, and copies blocks when told to.</p>
+<p><b>Single point of failure:</b> there is only one active NameNode, and without its metadata no file can be located, even though the data still sits on the DataNodes. If it crashes, the whole cluster is unusable.</p>
+<p><b>Mitigation:</b> regular checkpoints and copies of the fsimage and edit log on several disks or remote storage. In Hadoop 2+, <b>HA</b> runs an Active and a Standby NameNode sharing the edit log (through JournalNodes), with ZooKeeper handling automatic failover.</p>
+</div></details>
+
+<details><summary><span class="n">14</span>Explain step by step how a client writes a file to HDFS.</summary>
+<div class="ans">
+<ol>
+<li>The client asks the NameNode to create the file. The NameNode checks permissions and that the file does not already exist.</li>
+<li>For each block, the client asks the NameNode for target DataNodes and gets a list, e.g. DN1, DN4, DN5 (rack-aware).</li>
+<li>The client opens a <b>pipeline</b>: client → DN1 → DN4 → DN5.</li>
+<li>The client streams data in small packets to DN1 only. DN1 stores each packet and forwards it to DN4, which forwards it to DN5.</li>
+<li><b>Acknowledgements</b> flow back along the pipeline (DN5 → DN4 → DN1 → client).</li>
+<li>When a block is full, steps 2–5 repeat for the next block.</li>
+<li>The client closes the file, and the NameNode commits the metadata.</li>
+</ol>
+<p>The client never sends data to the NameNode and never copies data to every DataNode itself.</p>
+</div></details>
+
+<details><summary><span class="n">15</span>Explain step by step how a client reads a file from HDFS.</summary>
+<div class="ans">
+<ol>
+<li>The client asks the NameNode to open the file.</li>
+<li>The NameNode returns the list of blocks and, for each block, the DataNodes holding a replica, sorted by distance to the client.</li>
+<li>The client reads each block <b>directly</b> from the closest DataNode, streaming it.</li>
+<li>If a DataNode fails or a checksum does not match, the client switches to another replica and reports the bad block.</li>
+<li>Blocks are read in order until the end of the file, and then the client closes it.</li>
+</ol>
+<p>Data never passes through the NameNode, which keeps it from becoming a bottleneck.</p>
+</div></details>
+
+<details><summary><span class="n">16</span>Why does HDFS use large blocks (128 MB)? Why does it handle many small files poorly?</summary>
+<div class="ans">
+<p><b>Large blocks:</b></p>
+<ul>
+<li>Seek time becomes small compared with transfer time, giving high throughput for streaming reads.</li>
+<li>Fewer blocks per file means less metadata in NameNode memory.</li>
+<li>Fewer, larger map tasks (one split per block), so less scheduling overhead.</li>
+</ul>
+<p><b>Small files problem:</b> every file and block costs about 150 bytes of NameNode RAM regardless of its size. Millions of tiny files exhaust NameNode memory, and each tiny file creates its own map task, which is very inefficient. A file smaller than a block does <b>not</b> waste a whole 128 MB on disk; the problem is metadata and task overhead.</p>
+<p>HDFS is also designed for write-once, read-many streaming. It is poor at low-latency reads and random updates, which is why HBase exists.</p>
+</div></details>
+
+<details><summary><span class="n">17</span>Compare GFS and HDFS. What does each component correspond to?</summary>
+<div class="ans">
+<table>
+<tr><th>GFS (Google)</th><th>HDFS (Hadoop)</th></tr>
+<tr><td>Master</td><td>NameNode</td></tr>
+<tr><td>Chunkserver</td><td>DataNode</td></tr>
+<tr><td>Chunk (64 MB)</td><td>Block (64 MB in Hadoop 1, 128 MB in Hadoop 2+)</td></tr>
+<tr><td>Operation log</td><td>Edit log</td></tr>
+<tr><td>Checkpoint image</td><td>fsimage</td></tr>
+<tr><td>Proprietary C++</td><td>Open-source Java (Apache)</td></tr>
+</table>
+<p>HDFS is the open-source implementation of the design described in Google's 2003 GFS paper: one master holding metadata, many workers holding replicated large chunks, built for large sequential reads on commodity hardware.</p>
+</div></details>
+</section>
+
+<!-- ============ MAPREDUCE ============ -->
+<section id="mapreduce">
+<h2>MapReduce</h2>
+<p class="lec">Lectures 6–8, 12</p>
+
+<details><summary><span class="n">18</span><span class="star">★</span>Write a MapReduce job: average temperature per city. Give the mapper/reducer pseudocode and the key-value pairs at each stage.</summary>
+<div class="ans">
+<p>Input lines look like <code>City, Date, Temperature</code>, e.g. <code>Baku, 2026-11-01, 14</code>.</p>
+<pre><code>MAP(offset, line):
+    city, date, temp = split(line, ",")
+    EMIT(city, temp)
+
+REDUCE(city, temps):
+    sum = 0; count = 0
+    for t in temps:
+        sum += t; count += 1
+    EMIT(city, sum / count)</code></pre>
+<table>
+<tr><th>Stage</th><th>Key</th><th>Value</th><th>Example</th></tr>
+<tr><td>Map input</td><td>byte offset</td><td>line</td><td>(0, "Baku, 2026-11-01, 14")</td></tr>
+<tr><td>Map output</td><td>city</td><td>temperature</td><td>(Baku, 14), (Baku, 18), (Ganja, 10)</td></tr>
+<tr><td>After shuffle &amp; sort</td><td>city</td><td>list of temperatures</td><td>(Baku, [14, 18, 16]), (Ganja, [10, 12])</td></tr>
+<tr><td>Reduce output</td><td>city</td><td>average</td><td>(Baku, 16), (Ganja, 11)</td></tr>
+</table>
+<p class="tip">The same template works for "total per key" questions (like the hospital question): the mapper emits (key, number) and the reducer sums.</p>
+</div></details>
+
+<details><summary><span class="n">19</span><span class="star">★</span>How could a combiner improve the job above? When can the reducer be reused as a combiner, and when not?</summary>
+<div class="ans">
+<p>A <b>combiner</b> is a "mini-reducer" that runs on each mapper's local output before the shuffle. It merges values with the same key on that node, so far fewer records are written to local disk and sent over the network.</p>
+<p><b>Reusing the reducer is safe only if the operation is associative and commutative,</b> such as sum, count, max and min. For word count, the pairs (cat,1), (cat,1), (cat,1) become (cat,3) locally, and the reducer still sums correctly.</p>
+<p><b>Average is the counterexample.</b> The average of averages is wrong when groups have different sizes: avg(avg(10, 20), avg(30)) = avg(15, 30) = 22.5, but the true average is 20. The fix is for the combiner to emit <code>(city, (sum, count))</code>. The reducer then adds up the sums and counts and divides once at the end.</p>
+<p>A combiner works only on <b>one mapper's</b> output. It cannot merge keys across mappers, and Hadoop may run it zero, one or many times, so the result must not depend on it.</p>
+</div></details>
+
+<details><summary><span class="n">20</span>Explain the shuffle and sort phase. What happens between map and reduce?</summary>
+<div class="ans">
+<ol>
+<li><b>Buffer and spill (map side):</b> map output goes into an in-memory buffer (100 MB by default). When it is about 80% full, it is <b>partitioned</b> by reducer, <b>sorted</b> by key, optionally combined, and spilled to the mapper's local disk.</li>
+<li><b>Merge:</b> the spill files are merged into one sorted, partitioned file per map task.</li>
+<li><b>Copy (shuffle):</b> each reducer fetches its own partition from <b>every</b> mapper over the network.</li>
+<li><b>Merge-sort (reduce side):</b> the reducer merges these sorted pieces so that all values for one key sit together: (key, [v1, v2, …]).</li>
+<li>The reduce function is called once per key.</li>
+</ol>
+<p><b>Purpose:</b> group all values for the same key together on one reducer. It is the most expensive phase, because it moves data across the network (all-to-all traffic). That is why combiners and good partitioning matter.</p>
+</div></details>
+
+<details><summary><span class="n">21</span>Explain data locality. Why does MapReduce move computation to the data?</summary>
+<div class="ans">
+<p>Data locality means running a map task on the node (or at least the rack) that already stores its input block. The scheduler asks the NameNode where the block's replicas are and prefers, in order:</p>
+<ol>
+<li>Node-local: same machine.</li>
+<li>Rack-local: same rack.</li>
+<li>Off-rack.</li>
+</ol>
+<p><b>Why:</b> the code (a JAR of a few KB) is tiny, while the data (128 MB per block, terabytes per job) is huge. Network bandwidth is the scarcest resource in a cluster. Shipping the code to the data avoids moving terabytes across the network, so jobs run faster, the network stays free for the shuffle, and the system scales.</p>
+<p>Replication helps locality: with 3 replicas, there are 3 nodes where a task can run locally.</p>
+</div></details>
+
+<details><summary><span class="n">22</span>Explain the difference between a block and an input split. How is the number of map tasks determined?</summary>
+<div class="ans">
+<ul>
+<li><b>Block:</b> a <i>physical</i> HDFS storage unit of a fixed size (128 MB), replicated across DataNodes.</li>
+<li><b>Input split:</b> a <i>logical</i> chunk of input assigned to one map task. It respects record boundaries: a line cut across two blocks belongs entirely to one split.</li>
+</ul>
+<p><b>Number of map tasks = number of input splits.</b> By default split size = block size, so one map task per block. Example: a 300 MB file with 128 MB blocks gives 3 blocks, 3 splits and 3 map tasks.</p>
+<p>Replication does <b>not</b> change the number of mappers. With replication factor 3 there are 9 physical copies but still only 3 map tasks. Each split is processed once, and the replicas only give more choices for where to run it.</p>
+<p>Inside a task, the record reader turns the split into records, and <code>map()</code> is called <b>once per record</b>.</p>
+</div></details>
+
+<details><summary><span class="n">23</span>Why does MapReduce spill intermediate data to local disk instead of HDFS?</summary>
+<div class="ans">
+<p><b>Why spill at all:</b> memory is limited. Map output first collects in a RAM buffer. When the buffer fills, it must be sorted and written to disk.</p>
+<p><b>Why local disk, not HDFS:</b></p>
+<ul>
+<li>Intermediate data is <b>temporary</b>. It is deleted once the job finishes.</li>
+<li>Writing to HDFS would replicate it 3 times across the network, which is expensive and pointless.</li>
+<li>If a node dies and its map output is lost, the framework simply <b>re-runs that map task</b> from the original replicated input.</li>
+</ul>
+<p>Only the <b>final</b> reducer output is written to HDFS, one <code>part-r-NNNNN</code> file per reducer.</p>
+</div></details>
+
+<details><summary><span class="n">24</span>Explain how a partitioner decides which reducer receives a key. Give an example.</summary>
+<div class="ans">
+<p>The default <b>HashPartitioner</b> computes <code>reducer = hash(key) mod R</code>, where R is the number of reducers. Every mapper uses the same function, so all pairs with the same key end up at the same reducer, which is required for correct results. Each mapper writes one partition file per reducer.</p>
+<p><b>Example</b> (R = 3, using the past exam hash values):</p>
+<table>
+<tr><th>Key</th><th>hash</th><th>hash mod 3</th><th>Reducer</th></tr>
+<tr><td>big</td><td>3</td><td>0</td><td>R0</td></tr>
+<tr><td>data</td><td>4</td><td>1</td><td>R1</td></tr>
+<tr><td>engineering</td><td>2</td><td>2</td><td>R2</td></tr>
+<tr><td>careful</td><td>10</td><td>1</td><td>R1</td></tr>
+</table>
+<p>A good partitioner spreads keys evenly. A skewed key (one very frequent word) overloads one reducer and slows the whole job. Custom partitioners can fix this or group related keys together.</p>
+</div></details>
+</section>
+
+<!-- ============ YARN ============ -->
+<section id="yarn">
+<h2>YARN</h2>
+<p class="lec">Lectures 7, 13</p>
+
+<details><summary><span class="n">25</span>Describe the roles of the ResourceManager, NodeManager, ApplicationMaster and container. How do they run a job together?</summary>
+<div class="ans">
+<table>
+<tr><th>Component</th><th>Runs</th><th>Role</th></tr>
+<tr><td>ResourceManager (RM)</td><td>1 per cluster (master)</td><td>Allocates cluster resources among applications. Its Scheduler decides who gets what; its ApplicationsManager accepts jobs and starts/restarts AMs.</td></tr>
+<tr><td>NodeManager (NM)</td><td>1 per worker node</td><td>Launches containers, monitors their CPU and memory, kills them if they exceed limits, and heartbeats to the RM.</td></tr>
+<tr><td>ApplicationMaster (AM)</td><td>1 per application</td><td>Negotiates containers with the RM, tells NMs to start tasks, monitors progress, and re-runs failed tasks.</td></tr>
+<tr><td>Container</td><td>Many</td><td>A unit of allocated resources (e.g. 2 vCPU + 4 GB RAM) on one node, in which a task runs.</td></tr>
+</table>
+<p><b>Flow:</b></p>
+<ol>
+<li>The client submits the job to the RM.</li>
+<li>The RM gets a container on some node and an NM launches the AM in it.</li>
+<li>The AM registers with the RM and requests containers (with locality preferences).</li>
+<li>The RM's scheduler grants containers.</li>
+<li>The AM asks those NMs to launch the map and reduce tasks.</li>
+<li>Tasks report progress to the AM.</li>
+<li>When done, the AM unregisters and its containers are released.</li>
+</ol>
+</div></details>
+
+<details><summary><span class="n">26</span>Compare Hadoop 1 (JobTracker/TaskTracker) with Hadoop 2 (YARN). What problems did YARN solve?</summary>
+<div class="ans">
+<p><b>Hadoop 1:</b> a single <b>JobTracker</b> both managed cluster resources and scheduled and monitored every task of every job. <b>TaskTrackers</b> on workers had fixed <b>map slots and reduce slots</b>.</p>
+<p><b>Problems:</b></p>
+<ul>
+<li><b>Scalability:</b> the JobTracker was overloaded beyond about 4,000 nodes.</li>
+<li><b>Single point of failure:</b> if the JobTracker crashed, all running jobs were lost.</li>
+<li><b>Poor utilisation:</b> idle reduce slots could not be used for map tasks.</li>
+<li><b>MapReduce only:</b> no way to run Spark, streaming or other frameworks.</li>
+</ul>
+<p><b>YARN's fix:</b> split the JobTracker's two jobs. The <b>ResourceManager</b> does only resource allocation, and a per-application <b>ApplicationMaster</b> does scheduling and monitoring for its own job. TaskTrackers became <b>NodeManagers</b>, and fixed slots became flexible <b>containers</b>. Many frameworks (MapReduce, Spark, Tez, Flink) can now share one cluster.</p>
+<table>
+<tr><th>Hadoop 1</th><th>Hadoop 2 (YARN)</th></tr>
+<tr><td>JobTracker</td><td>ResourceManager + ApplicationMaster</td></tr>
+<tr><td>TaskTracker</td><td>NodeManager</td></tr>
+<tr><td>Map/reduce slots</td><td>Containers</td></tr>
+</table>
+</div></details>
+
+<details><summary><span class="n">27</span><span class="star">★</span>What happens when (a) the node running the ApplicationMaster fails, and (b) a worker node fails? Which component detects and which handles each?</summary>
+<div class="ans">
+<p><b>(a) The AM's node fails:</b></p>
+<ul>
+<li>The AM dies with its node.</li>
+<li><b>Detection:</b> the ResourceManager stops receiving the AM's heartbeats (and the NM's heartbeats).</li>
+<li><b>Handling:</b> the <b>ResourceManager</b> (its ApplicationsManager) starts a <b>new AM attempt</b> in a new container on another node, up to the maximum attempts (default 2).</li>
+<li>The new MapReduce AM can recover completed tasks from the job history and re-run only the unfinished ones.</li>
+</ul>
+<p><b>(b) A worker node fails:</b></p>
+<ul>
+<li><b>Detection:</b> its NodeManager stops heartbeating to the RM, which marks the node lost after a timeout (about 10 minutes by default). The AM also notices that its tasks stopped reporting progress.</li>
+<li><b>Handling:</b> the <b>ApplicationMaster</b> decides to re-run the failed tasks. It requests new containers from the RM.</li>
+<li><b>Where:</b> on healthy nodes, preferably one holding a replica of the input block (data locality).</li>
+<li>Map tasks that had already <b>finished</b> on that node are also re-run, because their output sat on the dead node's local disk.</li>
+</ul>
+</div></details>
+
+<details><summary><span class="n">28</span>Explain Dominant Resource Fairness (DRF) with an example.</summary>
+<div class="ans">
+<p>Fair sharing is simple with one resource, but YARN schedules several (CPU <i>and</i> memory). DRF looks at each user's <b>dominant share</b>: the largest fraction of any single resource the user consumes. It then tries to make these dominant shares equal across users. It always gives the next container to the user with the smallest dominant share.</p>
+<p><b>Example:</b> the cluster has 9 CPUs and 18 GB RAM.</p>
+<ul>
+<li>User A's task needs (1 CPU, 4 GB): 1/9 CPU = 11%, 4/18 RAM = 22%. A's dominant resource is <b>memory</b>.</li>
+<li>User B's task needs (3 CPU, 1 GB): 3/9 CPU = 33%, 1/18 RAM = 6%. B's dominant resource is <b>CPU</b>.</li>
+</ul>
+<p>DRF equalises them. Give A x tasks and B y tasks so that 4x/18 = 3y/9, under 1x + 3y ≤ 9 CPUs and 4x + 1y ≤ 18 GB. The result is <b>A = 3 tasks</b> (3 CPU, 12 GB, which is 2/3 of RAM) and <b>B = 2 tasks</b> (6 CPU, 2 GB, which is 2/3 of CPU). Both have a dominant share of 66.7%.</p>
+<p><b>Properties:</b> no user can gain by lying about their needs (strategy-proof), no user would prefer another user's allocation (envy-free), and every user gets at least what an equal split of the cluster would give them.</p>
+</div></details>
+</section>
+
+<!-- ============ HBASE ============ -->
+<section id="hbase">
+<h2>HBase</h2>
+<p class="lec">Lectures 9–11 · confirmed for your midterm</p>
+
+<details><summary><span class="n">29</span>Explain the HBase write path. What is the role of the WAL, MemStore and HFile, and what happens if a RegionServer crashes?</summary>
+<div class="ans">
+<ol>
+<li>The client finds the RegionServer that hosts the row's region (using the <code>hbase:meta</code> table) and sends the Put.</li>
+<li><b>WAL (Write-Ahead Log):</b> the RegionServer first appends the change to its WAL, which is stored in HDFS and therefore replicated. This is what makes the write <b>durable</b>.</li>
+<li><b>MemStore:</b> the change is then applied to the in-memory MemStore of the right column family (Store), kept sorted by row key. The client receives an acknowledgement.</li>
+<li><b>Flush:</b> when the MemStore fills (128 MB by default), it is written to disk as a new, immutable, sorted <b>HFile</b> in HDFS, and the old WAL entries can be discarded.</li>
+<li><b>Compaction</b> later merges the many HFiles.</li>
+</ol>
+<p><b>RegionServer crash:</b> MemStore contents are lost from memory, but the WAL is safe in HDFS. The <b>HMaster</b> detects the failure (through ZooKeeper), splits the dead server's WAL by region, and reassigns the regions to other RegionServers. These <b>replay</b> the WAL edits into their MemStores, so no acknowledged write is lost.</p>
+</div></details>
+
+<details><summary><span class="n">30</span>Explain the HBase data model: row key, column family, column qualifier, versioning. Give an example table.</summary>
+<div class="ans">
+<ul>
+<li><b>Row key:</b> the unique identifier of a row. Rows are stored sorted by row key, so design it for your access pattern.</li>
+<li><b>Column family:</b> a group of related columns, declared when the table is created. Each family is stored separately (its own Store and HFiles) for storage efficiency.</li>
+<li><b>Column qualifier:</b> the column name inside a family. Qualifiers can be added freely at any time, and rows can have different columns (sparse).</li>
+<li><b>Cell:</b> (row key, family:qualifier, timestamp) → value, stored as bytes.</li>
+<li><b>Versioning:</b> each cell can keep multiple versions with timestamps. Reads return the newest by default.</li>
+</ul>
+<table>
+<tr><th>Row key</th><th>info:name</th><th>info:city</th><th>orders:last_item</th><th>orders:total</th></tr>
+<tr><td>user#001</td><td>Rashad</td><td>Baku (t2) / Ganja (t1)</td><td>laptop</td><td>1200</td></tr>
+<tr><td>user#002</td><td>Aysel</td><td>Baku</td><td>—</td><td>—</td></tr>
+</table>
+<p>Two column families (<code>info</code>, <code>orders</code>). The <code>info:city</code> cell for user#001 has two versions. user#002 simply has no <code>orders</code> cells, which costs no storage.</p>
+</div></details>
+
+<details><summary><span class="n">31</span>Describe the roles of HMaster, RegionServer and Region. How does HBase handle a RegionServer failure?</summary>
+<div class="ans">
+<ul>
+<li><b>Region:</b> a contiguous range of rows of a table (start key to end key). Tables start as one region and <b>split</b> automatically as they grow, which is how HBase scales.</li>
+<li><b>RegionServer:</b> a worker, usually co-located with a DataNode. It serves read and write requests for the regions assigned to it, and holds the WAL, MemStores and block cache.</li>
+<li><b>HMaster:</b> the coordinator. It assigns regions to RegionServers, balances load, handles RegionServer failover, and runs schema/DDL operations (create table, add column family). It is <b>not</b> in the read/write path.</li>
+<li><b>ZooKeeper:</b> tracks live servers and the active HMaster.</li>
+</ul>
+<p><b>RegionServer failure:</b></p>
+<ol>
+<li>Its ZooKeeper session expires, and the HMaster is notified.</li>
+<li>The HMaster splits the dead server's WAL per region.</li>
+<li>It reassigns the regions to healthy RegionServers.</li>
+<li>Those servers replay the WAL edits, then serve the regions.</li>
+</ol>
+<p>The HFiles are already in replicated HDFS, so only the un-flushed edits need replaying.</p>
+</div></details>
+
+<details><summary><span class="n">32</span>Explain compaction. Why is it needed, and what is the difference between minor and major compaction?</summary>
+<div class="ans">
+<p><b>Why:</b> every MemStore flush creates a new HFile, and HFiles are immutable. Over time a Store has many small HFiles, and a read must check all of them, which is slow. Deletes and updates also only add new entries (delete markers, called tombstones, and new versions), so old data piles up.</p>
+<p><b>Compaction</b> merges HFiles into fewer, larger sorted files to improve read performance.</p>
+<ul>
+<li><b>Minor compaction:</b> merges a few small adjacent HFiles into one. It is quick and frequent, and does <b>not</b> remove deleted cells.</li>
+<li><b>Major compaction:</b> rewrites <b>all</b> HFiles of a Store into one. It permanently removes deleted cells, expired data (TTL) and versions beyond the maximum. It is heavy on disk and network, so it is often scheduled for off-peak hours.</li>
+</ul>
+</div></details>
+
+<details><summary><span class="n">33</span>Compare HBase and HDFS. Why use HBase on top of HDFS, and for which use cases?</summary>
+<div class="ans">
+<table>
+<tr><th></th><th>HDFS</th><th>HBase</th></tr>
+<tr><td>Type</td><td>Distributed file system</td><td>Distributed NoSQL column-family database</td></tr>
+<tr><td>Access</td><td>Sequential streaming of large files</td><td>Random, real-time reads and writes by row key</td></tr>
+<tr><td>Updates</td><td>Write-once, append only</td><td>Insert, update and delete individual cells</td></tr>
+<tr><td>Latency</td><td>High (batch)</td><td>Low (milliseconds)</td></tr>
+<tr><td>Best for</td><td>Batch processing of whole datasets (MapReduce)</td><td>Lookups of single rows in billions of rows</td></tr>
+</table>
+<p><b>Why on top of HDFS:</b> HBase gets durable, replicated, fault-tolerant storage for its HFiles and WAL from HDFS. It adds what HDFS lacks: random access and updates, through the MemStore + HFile design, sorted row keys and an index inside each HFile.</p>
+<p><b>Use cases:</b> messaging inboxes (Facebook Messenger originally), user profiles and session data, time-series and sensor data (IoT), real-time counters, and serving results computed by batch jobs.</p>
+</div></details>
+</section>
+
+</main>
+
+<script>
+function toggleAll(open){document.querySelectorAll('details').forEach(d=>d.open=open);}
+window.addEventListener('beforeprint',()=>toggleAll(true));
+</script>
+</body>
+</html>
